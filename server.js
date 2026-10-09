@@ -5,6 +5,10 @@ const app = express();
 
 app.use(express.json());
 
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
+
 //---------------------------------------------------------------------------------------------------------------
 //*  Student Data
 //---------------------------------------------------------------------------------------------------------------
@@ -23,7 +27,6 @@ app.get("/students", async (req, res) => {
                 ON students.house = houses.id
             ORDER BY students.id
         `);
-
     res.json(result.rows);
   } catch (error) {
     console.error(error);
@@ -104,13 +107,53 @@ app.get("/houses", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
-
 //---------------------------------------------------------------------------------------------------------------
 //*  Staff Data
 //---------------------------------------------------------------------------------------------------------------
+
+app.get("/staff", async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT * FROM staff`);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+app.post("/staff", async (req, res) => {
+  const { first_name, last_name, role } = req.body;
+  try {
+    const result = await pool.query(
+      "INSERT INTO staff (first_name, last_name, role) VALUES ($1, $2, $3) RETURNING *",
+      [first_name, last_name, role],
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+app.delete("/staff/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "DELETE FROM staff WHERE id = $1 RETURNING *",
+      [id],
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
 
 //---------------------------------------------------------------------------------------------------------------
 //*  Class Data
