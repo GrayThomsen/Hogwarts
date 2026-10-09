@@ -155,6 +155,23 @@ app.delete("/staff/:id", async (req, res) => {
   }
 });
 
+app.patch("/staff/:id", async (req, res) => {
+  const { id } = req.params;
+  const { first_name, last_name, role } = req.body;
+  try {
+    const result = await pool.query(
+      "UPDATE staff SET first_name = $1, last_name = $2, role = $3 WHERE id = $4 RETURNING *",
+      [first_name, last_name, role, id],
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
 //---------------------------------------------------------------------------------------------------------------
 //*  Class Data
 //---------------------------------------------------------------------------------------------------------------
