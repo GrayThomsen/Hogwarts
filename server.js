@@ -30,6 +30,9 @@ app.get("/students", async (req, res) => {
 });
 
 // POST and thereby create a new Hogwarts student.
+//---------------------------------------------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------------------------------------------
 app.post("/students", async (req, res) => {
   const { first_name, last_name, house } = req.body;
 
@@ -48,28 +51,27 @@ app.post("/students", async (req, res) => {
   }
 });
 
-(app.delete("/students/:id"),
-  async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await pool.query(
-        "DELETE FROM students WHERE id = $1 RETURNING *",
-        [id],
-      );
-      res.json(result.rows[0]);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        error: "Database error",
-      });
-    }
-  });
+app.delete("/students/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "DELETE FROM students WHERE id = $1 RETURNING *",
+      [id],
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
 
-app.patch("students/:id", async (req, res) => {
+app.patch("/students/:id", async (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, house } = req.body;
   try {
-    const reult = await pool.query(
+    const result = await pool.query(
       "UPDATE students SET first_name = $1, last_name = $2, house = $3 WHERE id = $4 RETURNING *",
       [first_name, last_name, house, id],
     );
