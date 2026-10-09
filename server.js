@@ -158,3 +158,31 @@ app.delete("/staff/:id", async (req, res) => {
 //---------------------------------------------------------------------------------------------------------------
 //*  Class Data
 //---------------------------------------------------------------------------------------------------------------
+
+app.get("/classes", async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT * FROM classes`);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+app.post("/classes", async (req, res) => {
+  const { name } = req.body;
+  try {
+    const result = await pool.query(
+      "INSERT INTO classes (name) VALUES ($1) RETURNING *",
+      [name],
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
