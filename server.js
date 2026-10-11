@@ -203,3 +203,104 @@ app.post("/classes", async (req, res) => {
     });
   }
 });
+
+app.delete("/classes/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "DELETE FROM classes WHERE id = $1 RETURNING *",
+      [id],
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+//-----------------------------------------------------------------------------------------------------------------
+//*  Teacher Class Data
+//-----------------------------------------------------------------------------------------------------------------
+
+app.get("/teacher_classes", async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT * FROM teacher_classes`);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+app.post("/teacher_classes", async (req, res) => {
+  const { teacher_id, class_id } = req.body;
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO teacher_classes (teacher_id, class_id) VALUES ($1, $2) RETURNING *",
+      [teacher_id, class_id],
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+app.delete("/teacher_classes/:teacher_id/:class_id", async (req, res) => {
+  const { teacher_id, class_id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM teacher_classes WHERE teacher_id = $1 AND class_id = $2 RETURNING *",
+      [teacher_id, class_id],
+    );
+
+    if (result.rowCount === 0) {
+      return res
+        .status(404)
+        .json({ error: "Teacher-class assignment not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+//---------------------------------------------------------------------------------------------------------------
+//*  Student Class Data
+//-----------------------------------------------------------------------------------------------------------------
+
+app.get("/student_classes", async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT * FROM student_classes`);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+app.post("/student_classes", async (req, res) => {
+  try {
+    const { student_id, class_id, year } = req.body;
+    const result = await pool.query(
+      "INSERT INTO student_classes (student_id, class_id, year) VALUES ($1, $2, $3) RETURNING *",
+      [student_id, class_id, year],
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
