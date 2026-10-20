@@ -100,11 +100,22 @@ app.post("/students", async (req, res) => {
 app.delete("/students/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    const controlRead = await pool.query(
+      "SELECT * FROM students WHERE id = $1",
+      [id],
+    );
+    if (controlRead.rows.length === 0) {
+      return res.status(404).json({
+        error: "Student not found",
+      });
+    }
+
     const result = await pool.query(
       "DELETE FROM students WHERE id = $1 RETURNING *",
       [id],
     );
-    res.json(result.rows[0]);
+    //Added status (200) to say "OK", even tho it is the default for when things go acording to plan.
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -117,6 +128,16 @@ app.put("/students/:id", async (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, house } = req.body;
   try {
+    const controlRead = await pool.query(
+      "SELECT * FROM students WHERE id = $1",
+      [id],
+    );
+    if (controlRead.rows.length === 0) {
+      return res.status(404).json({
+        error: "Student not found",
+      });
+    }
+
     const result = await pool.query(
       "UPDATE students SET first_name = $1, last_name = $2, house = $3 WHERE id = $4 RETURNING *",
       [first_name, last_name, house, id],
