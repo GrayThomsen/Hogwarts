@@ -160,7 +160,13 @@ app.get("/houses", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM houses");
 
-    res.json(result.rows);
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "Houses not found",
+      });
+    }
+
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -173,7 +179,14 @@ app.get("/houses/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query("SELECT * FROM houses WHERE id = $1", [id]);
-    res.json(result.rows[0]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "House not found",
+      });
+    }
+
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -189,7 +202,7 @@ app.get("/houses/:id", async (req, res) => {
 app.get("/staff", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM staff`);
-    res.json(result.rows);
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -205,7 +218,7 @@ app.post("/staff", async (req, res) => {
       "INSERT INTO staff (first_name, last_name, role) VALUES ($1, $2, $3) RETURNING *",
       [first_name, last_name, role],
     );
-    res.json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -221,7 +234,7 @@ app.delete("/staff/:id", async (req, res) => {
       "DELETE FROM staff WHERE id = $1 RETURNING *",
       [id],
     );
-    res.json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -270,7 +283,7 @@ app.post("/classes", async (req, res) => {
       "INSERT INTO classes (name) VALUES ($1) RETURNING *",
       [name],
     );
-    res.status(201).json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -319,7 +332,7 @@ app.post("/teacher_classes", async (req, res) => {
       "INSERT INTO teacher_classes (teacher_id, class_id) VALUES ($1, $2) RETURNING *",
       [teacher_id, class_id],
     );
-    res.status(201).json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Database error" });
@@ -371,7 +384,7 @@ app.post("/student_classes", async (req, res) => {
       "INSERT INTO student_classes (student_id, class_id, year) VALUES ($1, $2, $3) RETURNING *",
       [student_id, class_id, year],
     );
-    res.status(201).json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
