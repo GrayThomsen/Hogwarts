@@ -214,6 +214,17 @@ app.get("/staff", async (req, res) => {
 app.post("/staff", async (req, res) => {
   const { first_name, last_name, role } = req.body;
   try {
+    //Like with students, not really necessary, but it prevents duplicate staff entries, which could cause confusion in the database.
+    const controlRead = await pool.query(
+      "SELECT * FROM staff WHERE first_name = $1 AND last_name = $2 AND role = $3",
+      [first_name, last_name, role],
+    );
+    if (controlRead.rows.length > 0) {
+      return res.status(400).json({
+        error: "Staff member already exists",
+      });
+    }
+
     const result = await pool.query(
       "INSERT INTO staff (first_name, last_name, role) VALUES ($1, $2, $3) RETURNING *",
       [first_name, last_name, role],
@@ -230,6 +241,15 @@ app.post("/staff", async (req, res) => {
 app.delete("/staff/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    const controlRead = await pool.query("SELECT * FROM staff WHERE id = $1", [
+      id,
+    ]);
+    if (controlRead.rows.length === 0) {
+      return res.status(404).json({
+        error: "Staff member not found",
+      });
+    }
+
     const result = await pool.query(
       "DELETE FROM staff WHERE id = $1 RETURNING *",
       [id],
