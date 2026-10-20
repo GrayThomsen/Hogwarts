@@ -72,7 +72,7 @@ app.delete("/students/:id", async (req, res) => {
   }
 });
 
-app.patch("/students/:id", async (req, res) => {
+app.put("/students/:id", async (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, house } = req.body;
   try {
@@ -99,6 +99,22 @@ app.get("/houses", async (req, res) => {
     const result = await pool.query("SELECT * FROM houses");
 
     res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+app.get("/houses/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(
+      "SELECT FROM houses WHERE id = $1 RETURNING *",
+      [id],
+    );
+    res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -155,7 +171,7 @@ app.delete("/staff/:id", async (req, res) => {
   }
 });
 
-app.patch("/staff/:id", async (req, res) => {
+app.put("/staff/:id", async (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, role } = req.body;
   try {
