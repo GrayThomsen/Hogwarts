@@ -1,0 +1,23 @@
+info:
+  name: Add Staff
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BaseURL}}/staff"
+  body:
+    type: json
+    data: |-
+      {
+        "first_name": "Peter",
+        "last_name": "Lind",
+        "role": "Teacher"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

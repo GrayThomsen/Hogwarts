@@ -1,0 +1,22 @@
+info:
+  name: Remove Class
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: "{{BaseURL}}/classes/:id"
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

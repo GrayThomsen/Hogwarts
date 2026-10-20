@@ -1,0 +1,23 @@
+info:
+  name: Add Class
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BaseURL}}/classes"
+  body:
+    type: json
+    data: |-
+      {
+        "first_name": "Peter",
+        "last_name": "Lind",
+        "role": "Teacher"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

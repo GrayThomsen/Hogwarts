@@ -1,0 +1,4 @@
+name: Developer
+variables:
+  - name: BaseURL
+    value: http://localhost:3000

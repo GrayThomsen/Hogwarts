@@ -80,7 +80,7 @@ app.put("/students/:id", async (req, res) => {
       "UPDATE students SET first_name = $1, last_name = $2, house = $3 WHERE id = $4 RETURNING *",
       [first_name, last_name, house, id],
     );
-    res.json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -110,10 +110,7 @@ app.get("/houses", async (req, res) => {
 app.get("/houses/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query(
-      "SELECT * FROM houses WHERE id = $1",
-      [id],
-    );
+    const result = await pool.query("SELECT * FROM houses WHERE id = $1", [id]);
     res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
@@ -179,7 +176,7 @@ app.put("/staff/:id", async (req, res) => {
       "UPDATE staff SET first_name = $1, last_name = $2, role = $3 WHERE id = $4 RETURNING *",
       [first_name, last_name, role, id],
     );
-    res.json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -195,7 +192,7 @@ app.put("/staff/:id", async (req, res) => {
 app.get("/classes", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM classes`);
-    res.json(result.rows);
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -211,7 +208,7 @@ app.post("/classes", async (req, res) => {
       "INSERT INTO classes (name) VALUES ($1) RETURNING *",
       [name],
     );
-    res.json(result.rows[0]);
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -227,7 +224,7 @@ app.delete("/classes/:id", async (req, res) => {
       "DELETE FROM classes WHERE id = $1 RETURNING *",
       [id],
     );
-    res.json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -243,7 +240,7 @@ app.delete("/classes/:id", async (req, res) => {
 app.get("/teacher_classes", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM teacher_classes`);
-    res.json(result.rows);
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -282,7 +279,7 @@ app.delete("/teacher_classes/:teacher_id/:class_id", async (req, res) => {
         .json({ error: "Teacher-class assignment not found" });
     }
 
-    res.json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Database error" });
@@ -296,7 +293,7 @@ app.delete("/teacher_classes/:teacher_id/:class_id", async (req, res) => {
 app.get("/student_classes", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM student_classes`);
-    res.json(result.rows);
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({
