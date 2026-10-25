@@ -201,6 +201,12 @@ app.get("/houses/:id", async (req, res) => {
 
 app.get("/staff", async (req, res) => {
   try {
+    const controlRead = await pool.query("SELECT * FROM staff");
+    if (controlRead.rows.length === 0) {
+      return res.status(404).json({
+        error: "Staff not found",
+      });
+    }
     const result = await pool.query(`SELECT * FROM staff`);
     res.status(200).json(result.rows);
   } catch (error) {
