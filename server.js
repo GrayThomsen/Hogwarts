@@ -89,7 +89,7 @@ app.post("/students", async (req, res) => {
       [first_name, last_name, house],
     );
     // At least, res(ponse) is called once to send the response to the client. It is made into JSON format and we say "create.rows[0]" to return the newly created student. With this approach, the client immediately gets the newly created student data without needing an additional GET request.
-    res.json(createdStudent.rows[0]);
+    res.status(201).json(createdStudent.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -237,7 +237,7 @@ app.post("/staff", async (req, res) => {
       "INSERT INTO staff (first_name, last_name, role) VALUES ($1, $2, $3) RETURNING *",
       [first_name, last_name, role],
     );
-    res.status(200).json(result.rows[0]);
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
