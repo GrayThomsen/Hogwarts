@@ -78,6 +78,12 @@ The server listens on port `3000` and accepts JSON request bodies.
 - `GET /teacher_classes` - Return all teacher-class assignments (`200`). If
   there are none, return `404` with
   `{"error":"No teacher-class assignments found"}`.
+- `POST /teacher_classes` - Create an assignment using `teacher_id` and `class_id`. If that combination already exists, return `409` with
+  `{"error":"Teacher-class combination already exists"}`. Otherwise return the
+  created record with `201`.
+- `DELETE /teacher_classes/:teacher_id/:class_id` - Delete and return the
+  matching assignment with `200`, or return `404` with
+  `{"error":"Teacher-class assignment not found"}` if it does not exist.
 - `POST /teacher_classes` - Create an assignment using `teacher_id`, `class_id`,
   and `year`. If that combination already exists, return `409` with
   `{"error":"Teacher-class combination already exists"}`. Otherwise return the

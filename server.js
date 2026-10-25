@@ -463,12 +463,12 @@ app.get("/teacher_classes", async (req, res) => {
 
 //Create a new teacher-class assignment
 app.post("/teacher_classes", async (req, res) => {
-  const { teacher_id, class_id, year } = req.body;
+  const { teacher_id, class_id } = req.body;
 
   try {
     const controlRead = await pool.query(
-      "SELECT * FROM teacher_classes WHERE teacher_id = $1 AND class_id = $2 AND year = $3",
-      [teacher_id, class_id, year],
+      "SELECT * FROM teacher_classes WHERE teacher_id = $1 AND class_id = $2",
+      [teacher_id, class_id],
     );
 
     if (controlRead.rows.length > 0) {
@@ -478,8 +478,8 @@ app.post("/teacher_classes", async (req, res) => {
     }
 
     const result = await pool.query(
-      "INSERT INTO teacher_classes (teacher_id, class_id, year) VALUES ($1, $2, $3) RETURNING *",
-      [teacher_id, class_id, year],
+      "INSERT INTO teacher_classes (teacher_id, class_id) VALUES ($1, $2) RETURNING *",
+      [teacher_id, class_id],
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -488,14 +488,14 @@ app.post("/teacher_classes", async (req, res) => {
   }
 });
 
-//Delete a teacher-class assignment by teacher ID, class ID, and year
-app.delete("/teacher_classes/:teacher_id/:class_id/:year", async (req, res) => {
-  const { teacher_id, class_id, year } = req.params;
+//Delete a teacher-class assignment by teacher ID and class ID
+app.delete("/teacher_classes/:teacher_id/:class_id", async (req, res) => {
+  const { teacher_id, class_id } = req.params;
 
   try {
     const result = await pool.query(
-      "DELETE FROM teacher_classes WHERE teacher_id = $1 AND class_id = $2 AND year = $3 RETURNING *",
-      [teacher_id, class_id, year],
+      "DELETE FROM teacher_classes WHERE teacher_id = $1 AND class_id = $2 RETURNING *",
+      [teacher_id, class_id],
     );
 
     if (result.rowCount === 0) {
