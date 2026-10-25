@@ -174,7 +174,7 @@ app.get("/houses", async (req, res) => {
     });
   }
 });
-
+// Get a specific house.
 app.get("/houses/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -199,6 +199,7 @@ app.get("/houses/:id", async (req, res) => {
 //*  Staff Data
 //---------------------------------------------------------------------------------------------------------------
 
+//Show list of all staff members
 app.get("/staff", async (req, res) => {
   try {
     const controlRead = await pool.query("SELECT * FROM staff");
@@ -216,7 +217,7 @@ app.get("/staff", async (req, res) => {
     });
   }
 });
-
+//This is posting (creating) a new staff member
 app.post("/staff", async (req, res) => {
   const { first_name, last_name, role } = req.body;
   try {
@@ -243,7 +244,7 @@ app.post("/staff", async (req, res) => {
     });
   }
 });
-
+//Delete a staff member by their ID
 app.delete("/staff/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -268,7 +269,7 @@ app.delete("/staff/:id", async (req, res) => {
     });
   }
 });
-
+//Update an existing staff member by their ID
 app.put("/staff/:id", async (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, role } = req.body;
@@ -298,7 +299,7 @@ app.put("/staff/:id", async (req, res) => {
 //---------------------------------------------------------------------------------------------------------------
 //*  Class Data
 //---------------------------------------------------------------------------------------------------------------
-
+//Get a list of all classes
 app.get("/classes", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM classes`);
@@ -316,6 +317,7 @@ app.get("/classes", async (req, res) => {
   }
 });
 
+//Create a new class
 app.post("/classes", async (req, res) => {
   const { name } = req.body;
   try {
@@ -342,6 +344,7 @@ app.post("/classes", async (req, res) => {
   }
 });
 
+//Delete a class by its ID
 app.delete("/classes/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -371,6 +374,7 @@ app.delete("/classes/:id", async (req, res) => {
 //*  Teacher Class Data
 //-----------------------------------------------------------------------------------------------------------------
 
+//Get a list of all teacher-class assignments
 app.get("/teacher_classes", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM teacher_classes`);
@@ -388,6 +392,7 @@ app.get("/teacher_classes", async (req, res) => {
   }
 });
 
+//Create a new teacher-class assignment
 app.post("/teacher_classes", async (req, res) => {
   const { teacher_id, class_id, year } = req.body;
 
@@ -414,6 +419,7 @@ app.post("/teacher_classes", async (req, res) => {
   }
 });
 
+//Delete a teacher-class assignment by teacher ID, class ID, and year
 app.delete("/teacher_classes/:teacher_id/:class_id/:year", async (req, res) => {
   const { teacher_id, class_id, year } = req.params;
 
@@ -440,6 +446,7 @@ app.delete("/teacher_classes/:teacher_id/:class_id/:year", async (req, res) => {
 //*  Student Class Data
 //-----------------------------------------------------------------------------------------------------------------
 
+//Get a list of all student-class assignments
 app.get("/student_classes", async (req, res) => {
   try {
     const controlRead = await pool.query("SELECT * FROM student_classes");
@@ -458,6 +465,7 @@ app.get("/student_classes", async (req, res) => {
   }
 });
 
+//Create a new student-class assignment
 app.post("/student_classes", async (req, res) => {
   try {
     const controlRead = await pool.query(
@@ -483,6 +491,7 @@ app.post("/student_classes", async (req, res) => {
   }
 });
 
+//Delete a student-class assignment by student ID, class ID, and year
 app.delete("/student_classes/:student_id/:class_id/:year", async (req, res) => {
   const { student_id, class_id, year } = req.params;
 
