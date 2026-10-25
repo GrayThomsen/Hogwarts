@@ -16,6 +16,7 @@ app.listen(3000, () => {
 // GET all Hogwarts students.
 app.get("/students", async (req, res) => {
   try {
+    // A little more excessive, since we want to see the name of the house.
     const result = await pool.query(`
             SELECT
                 students.id,
