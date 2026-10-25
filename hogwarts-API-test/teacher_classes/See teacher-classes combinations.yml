@@ -1,0 +1,19 @@
+info:
+  name: See teacher-classes combinations
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BaseURL}}/:dataTable"
+  params:
+    - name: dataTable
+      value: teacher_classes
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

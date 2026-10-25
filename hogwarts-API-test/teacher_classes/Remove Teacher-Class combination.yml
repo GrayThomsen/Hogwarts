@@ -1,0 +1,25 @@
+info:
+  name: Remove Teacher-Class combination
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: "{{BaseURL}}/:dataTable/:teacher_id/:class_id"
+  params:
+    - name: class_id
+      value: ""
+      type: path
+    - name: teacher_id
+      value: ""
+      type: path
+    - name: dataTable
+      value: teacher_classes
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

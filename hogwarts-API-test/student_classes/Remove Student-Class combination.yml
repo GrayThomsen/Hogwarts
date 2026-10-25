@@ -1,0 +1,28 @@
+info:
+  name: Remove Student-Class combination
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: "{{BaseURL}}/:dataTable/:student_id/:class_id/:year"
+  params:
+    - name: student_id
+      value: ""
+      type: path
+    - name: year
+      value: ""
+      type: path
+    - name: class_id
+      value: ""
+      type: path
+    - name: dataTable
+      value: student_classes
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,26 @@
+info:
+  name: Add Student-Class combination
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BaseURL}}/:dataTable"
+  params:
+    - name: dataTable
+      value: student_classes
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "teacher_id": 1,
+        "class_id": 3
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
