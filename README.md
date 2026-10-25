@@ -1,6 +1,7 @@
 # This is a document, containing an overview of the Hogwarts API endpoints.
+**Written by @GrayThomsen**.
 
-also known as "Suppekode" by the great Peter Lind, this doc will provide an explanation of which api calls are available and what they do, in plain english.
+Also known as "Suppekode" by the great Peter Lind, this doc will provide an explanation of which API calls are available and what they do, in plain English.
 
 ## Overview
 
