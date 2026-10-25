@@ -31,7 +31,9 @@ The server listens on port `3000` and accepts JSON request bodies.
 
 - `GET /staff` - Return all staff members (`200`). If there are none, return
   `404` with `{"error":"Staff not found"}`.
-- `GET /staff/:id` - **Not implemented.**
+- `GET /staff/:id` - Return the staff member with that ID (`200`). If the
+  member does not exist, return `404` with
+  `{"error":"Staff member not found"}`.
 - `POST /staff` - Create a staff member using `first_name`, `last_name`, and
   `role`. A matching first name, last name, and role is rejected with `400` and
   `{"error":"Staff member already exists"}`. Otherwise return the created
@@ -47,12 +49,15 @@ The server listens on port `3000` and accepts JSON request bodies.
 
 - `GET /classes` - Return all classes (`200`). If there are none, return `404`
   with `{"error":"No classes found"}`.
-- `GET /classes/:id` - **Not implemented.**
+- `GET /classes/:id` - Return the class with that ID (`200`). If it does not
+  exist, return `404` with `{"error":"Class not found"}`.
 - `POST /classes` - Create a class using `name`. A class with the same name is
   rejected with `409` and
   `{"error":"Class with the same name already exists"}`. Otherwise return the
   created record with `201`.
-- `PUT /classes/:id` - **Not implemented.**
+- `PUT /classes/:id` - Update the class's `name`. Return the updated record
+  with `200`, or `404` with `{"error":"Class not found"}` if the ID does not
+  exist.
 - `DELETE /classes/:id` - Delete and return the class record with `200`, or
   return `404` with `{"error":"Class not found"}` if the ID does not exist.
 

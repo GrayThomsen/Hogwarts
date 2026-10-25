@@ -218,6 +218,27 @@ app.get("/staff", async (req, res) => {
     });
   }
 });
+
+app.get("/staff/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query("SELECT * FROM staff WHERE id = $1", [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "Staff member not found",
+      });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
 //This is posting (creating) a new staff member
 app.post("/staff", async (req, res) => {
   const { first_name, last_name, role } = req.body;
@@ -318,6 +339,26 @@ app.get("/classes", async (req, res) => {
   }
 });
 
+app.get("/classes/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query("SELECT * FROM classes WHERE id = $1", [
+      id,
+    ]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "Class not found",
+      });
+    }
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
 //Create a new class
 app.post("/classes", async (req, res) => {
   const { name } = req.body;
@@ -337,6 +378,33 @@ app.post("/classes", async (req, res) => {
       [name],
     );
     res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+});
+
+app.put("/classes/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  try {
+    const controlRead = await pool.query(
+      "SELECT * FROM classes WHERE id = $1",
+      [id],
+    );
+    if (controlRead.rows.length === 0) {
+      return res.status(404).json({
+        error: "Class not found",
+      });
+    }
+
+    const result = await pool.query(
+      "UPDATE classes SET name = $1 WHERE id = $2 RETURNING *",
+      [name, id],
+    );
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({
