@@ -302,6 +302,11 @@ app.put("/staff/:id", async (req, res) => {
 app.get("/classes", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM classes`);
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "No classes found",
+      });
+    }
     res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
@@ -314,6 +319,16 @@ app.get("/classes", async (req, res) => {
 app.post("/classes", async (req, res) => {
   const { name } = req.body;
   try {
+    const controlRead = await pool.query(
+      "SELECT * FROM classes WHERE name = $1",
+      [name],
+    );
+    if (controlRead.rows.length > 0) {
+      return res.status(409).json({
+        error: "Class with the same name already exists",
+      });
+    }
+
     const result = await pool.query(
       "INSERT INTO classes (name) VALUES ($1) RETURNING *",
       [name],
@@ -330,6 +345,15 @@ app.post("/classes", async (req, res) => {
 app.delete("/classes/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    const controlRead = await pool.query(
+      "SELECT * FROM classes WHERE id = $1",
+      [id],
+    );
+    if (controlRead.rows.length === 0) {
+      return res.status(404).json({
+        error: "Class not found",
+      });
+    }
     const result = await pool.query(
       "DELETE FROM classes WHERE id = $1 RETURNING *",
       [id],
@@ -350,6 +374,11 @@ app.delete("/classes/:id", async (req, res) => {
 app.get("/teacher_classes", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM teacher_classes`);
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "No teacher-class assignments found",
+      });
+    }
     res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
@@ -363,6 +392,17 @@ app.post("/teacher_classes", async (req, res) => {
   const { teacher_id, class_id, year } = req.body;
 
   try {
+    const controlRead = await pool.query(
+      "SELECT * FROM teacher_classes WHERE teacher_id = $1 AND class_id = $2 AND year = $3",
+      [teacher_id, class_id, year],
+    );
+
+    if (controlRead.rows.length > 0) {
+      return res.status(409).json({
+        error: "Teacher-class combination already exists",
+      });
+    }
+
     const result = await pool.query(
       "INSERT INTO teacher_classes (teacher_id, class_id, year) VALUES ($1, $2, $3) RETURNING *",
       [teacher_id, class_id, year],
