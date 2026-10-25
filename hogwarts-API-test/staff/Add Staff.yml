@@ -5,7 +5,11 @@ info:
 
 http:
   method: POST
-  url: "{{BaseURL}}/staff"
+  url: "{{BaseURL}}/:dataTable"
+  params:
+    - name: dataTable
+      value: staff
+      type: path
   body:
     type: json
     data: |-

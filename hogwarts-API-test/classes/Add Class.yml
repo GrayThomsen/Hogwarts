@@ -5,14 +5,16 @@ info:
 
 http:
   method: POST
-  url: "{{BaseURL}}/classes"
+  url: "{{BaseURL}}/:dataTable"
+  params:
+    - name: dataTable
+      value: classes
+      type: path
   body:
     type: json
     data: |-
       {
-        "first_name": "Peter",
-        "last_name": "Lind",
-        "role": "Teacher"
+      "name": "Webdesign"
       }
   auth: inherit
 

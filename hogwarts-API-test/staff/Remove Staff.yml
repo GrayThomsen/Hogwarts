@@ -5,7 +5,14 @@ info:
 
 http:
   method: DELETE
-  url: "{{BaseURL}}/staff/11"
+  url: "{{BaseURL}}/:dataTable/:id"
+  params:
+    - name: dataTable
+      value: staff
+      type: path
+    - name: id
+      value: ""
+      type: path
   body:
     type: json
     data: ""

@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{BaseURL}}/teachers"
+  url: "{{BaseURL}}/:dataTable"
+  params:
+    - name: dataTable
+      value: staff
+      type: path
   auth: inherit
 
 settings:

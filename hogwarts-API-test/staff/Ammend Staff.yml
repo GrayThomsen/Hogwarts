@@ -5,8 +5,11 @@ info:
 
 http:
   method: PUT
-  url: "{{BaseURL}}/teachers/:id"
+  url: "{{BaseURL}}/:dataTable/:id"
   params:
+    - name: dataTable
+      value: staff
+      type: path
     - name: id
       value: ""
       type: path

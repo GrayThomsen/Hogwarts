@@ -5,8 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{BaseURL}}/classes/:id"
+  url: "{{BaseURL}}/:dataTable/:id"
   params:
+    - name: dataTable
+      value: classes
+      type: path
     - name: id
       value: ""
       type: path
