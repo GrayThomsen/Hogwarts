@@ -1,98 +1,115 @@
 # Hogwarts API
 
-This document describes the API routes currently implemented in `server.js`.
-The server listens on port `3000` and accepts JSON request bodies.
+Dette dokument beskriver de API-ruter, der er implementeret i `server.js`.
+Serveren lytter på port `3000` og modtager JSON i request body.
+Fejlbeskederne i svarene er på engelsk, som i koden.
 
 ## Houses
 
-- `GET /houses` - Return all houses (`200`). If there are no houses, return
-  `404` with `{"error":"Houses not found"}`.
-- `GET /houses/:id` - Return the house with that ID (`200`). If it does not
-  exist, return `404` with `{"error":"House not found"}`.
+- `GET /houses` - Returnerer alle huse (`200`). Findes der ingen, svares `404`
+  med `{"error":"Houses not found"}`.
+- `GET /houses/:id` - Returnerer huset med det id (`200`). Findes det ikke,
+  svares `404` med `{"error":"House not found"}`.
 
 ## Students
 
-- `GET /students` - Return all students, including the house name (`200`). If
-  there are no students, return `404` with `{"error":"No students found"}`.
-- `GET /students/:id` - Return the student with that ID, including the house
-  name (`200`). If the student does not exist, return `404` with
-  `{"error":"Student not found"}`.
-- `POST /students` - Create a student using `first_name`, `last_name`, and
-  `house`. A student with the same first name, last name, and house is rejected
-  with `400` and `{"error":"Student already exists"}`. Otherwise return the
-  created database record with `201`.
-- `PUT /students/:id` - Replace the student's `first_name`, `last_name`, and
-  `house`. Return the updated record with `200`, or `404` with
-  `{"error":"Student not found"}` if the ID does not exist.
-- `DELETE /students/:id` - Delete and return the student record with `200`, or
-  return `404` with `{"error":"Student not found"}` if the ID does not exist.
+- `GET /students` - Returnerer alle elever inkl. husnavn (via join med houses) (`200`). Findes ingen,
+  svares `404` med `{"error":"No students found"}`.
+- `GET /students/:id` - Returnerer eleven med det id inkl. husnavn (`200`).
+  Findes eleven ikke, svares `404` med `{"error":"Student not found"}`.
+- `POST /students` - Opretter en elev ud fra `first_name`, `last_name` og
+  `house`. Findes samme fornavn, efternavn og hus allerede, svares `400` med
+  `{"error":"Student already exists"}`. Ellers returneres den oprettede række
+  med `201`.
+- `PUT /students/:id` - Erstatter elevens `first_name`, `last_name` og `house`.
+  Returnerer den opdaterede række (`200`), eller `404` med
+  `{"error":"Student not found"}` hvis id ikke findes.
+- `DELETE /students/:id` - Sletter eleven og returnerer rækken (`200`), eller
+  `404` med `{"error":"Student not found"}` hvis id ikke findes.
 
 ## Staff
 
-- `GET /staff` - Return all staff members (`200`). If there are none, return
-  `404` with `{"error":"Staff not found"}`.
-- `GET /staff/:id` - Return the staff member with that ID (`200`). If the
-  member does not exist, return `404` with
-  `{"error":"Staff member not found"}`.
-- `POST /staff` - Create a staff member using `first_name`, `last_name`, and
-  `role`. A matching first name, last name, and role is rejected with `400` and
-  `{"error":"Staff member already exists"}`. Otherwise return the created
-  record with `201`.
-- `PUT /staff/:id` - Replace the staff member's `first_name`, `last_name`, and
-  `role`. Return the updated record with `200`, or `404` with
-  `{"error":"Staff member not found"}` if the ID does not exist.
-- `DELETE /staff/:id` - Delete and return the staff record with `200`, or
-  return `404` with `{"error":"Staff member not found"}` if the ID does not
-  exist.
+- `GET /staff` - Returnerer alt personale (`200`). Findes ingen, svares `404`
+  med `{"error":"Staff not found"}`.
+- `GET /staff/:id` - Returnerer medarbejderen med det id (`200`). Findes
+  vedkommende ikke, svares `404` med `{"error":"Staff member not found"}`.
+- `POST /staff` - Opretter en medarbejder ud fra `first_name`, `last_name` og
+  `role`. Findes samme fornavn, efternavn og rolle allerede, svares `400` med
+  `{"error":"Staff member already exists"}`. Ellers returneres den oprettede
+  række med `201`.
+- `PUT /staff/:id` - Erstatter `first_name`, `last_name` og `role`. Returnerer
+  den opdaterede række (`200`), eller `404` med
+  `{"error":"Staff member not found"}` hvis id ikke findes.
+- `DELETE /staff/:id` - Sletter medarbejderen og returnerer rækken (`200`),
+  eller `404` med `{"error":"Staff member not found"}` hvis id ikke findes.
 
 ## Classes
 
-- `GET /classes` - Return all classes (`200`). If there are none, return `404`
-  with `{"error":"No classes found"}`.
-- `GET /classes/:id` - Return the class with that ID (`200`). If it does not
-  exist, return `404` with `{"error":"Class not found"}`.
-- `POST /classes` - Create a class using `name`. A class with the same name is
-  rejected with `409` and
-  `{"error":"Class with the same name already exists"}`. Otherwise return the
-  created record with `201`.
-- `PUT /classes/:id` - Update the class's `name`. Return the updated record
-  with `200`, or `404` with `{"error":"Class not found"}` if the ID does not
-  exist.
-- `DELETE /classes/:id` - Delete and return the class record with `200`, or
-  return `404` with `{"error":"Class not found"}` if the ID does not exist.
+- `GET /classes` - Returnerer alle fag/klasser (`200`). Findes ingen, svares
+  `404` med `{"error":"No classes found"}`.
+- `GET /classes/:id` - Returnerer klassen med det id (`200`). Findes den ikke,
+  svares `404` med `{"error":"Class not found"}`.
+- `POST /classes` - Opretter en klasse ud fra `name`. Findes navnet allerede,
+  svares `409` med `{"error":"Class with the same name already exists"}`.
+  Ellers returneres den oprettede række med `201`.
+- `PUT /classes/:id` - Opdaterer klassens `name`. Returnerer den opdaterede
+  række (`200`), eller `404` med `{"error":"Class not found"}` hvis id ikke
+  findes.
+- `DELETE /classes/:id` - Sletter klassen og returnerer rækken (`200`), eller
+  `404` med `{"error":"Class not found"}` hvis id ikke findes.
 
 ## Student-class assignments
 
-- `GET /student_classes` - Return all student-class assignments (`200`). If
-  there are none, return `404` with `{"error":"Student not found"}`.
-- `POST /student_classes` - Create an assignment using `student_id`, `class_id`,
-  and `year`. If that combination already exists, return `409` with
-  `{"error":"Student-class combination already exists"}`. Otherwise return the
-  created record with `201`.
-- `DELETE /student_classes/:student_id/:class_id/:year` - Delete and return the
-  matching assignment with `200`, or return `404` with
-  `{"error":"Student-class assignment not found"}` if it does not exist.
+- `GET /student_classes` - Returnerer alle elev-klasse-koblinger (`200`).
+  Findes ingen, svares `404` med `{"error":"No student-class assignments found"}`.
+- `POST /student_classes` - Opretter en kobling ud fra `student_id`, `class_id`
+  og `year`. Findes kombinationen allerede, svares `409` med
+  `{"error":"Student-class combination already exists"}`. Ellers returneres den
+  oprettede række med `201`.
+- `DELETE /student_classes/:student_id/:class_id/:year` - Sletter den matchende
+  kobling og returnerer den (`200`), eller `404` med
+  `{"error":"Student-class assignment not found"}` hvis den ikke findes.
 
 ## Teacher-class assignments
 
-- `GET /teacher_classes` - Return all teacher-class assignments (`200`). If
-  there are none, return `404` with
+- `GET /teacher_classes` - Returnerer alle lærer-klasse-koblinger (`200`).
+  Findes ingen, svares `404` med
   `{"error":"No teacher-class assignments found"}`.
-- `POST /teacher_classes` - Create an assignment using `teacher_id` and `class_id`. If that combination already exists, return `409` with
-  `{"error":"Teacher-class combination already exists"}`. Otherwise return the
-  created record with `201`.
-- `DELETE /teacher_classes/:teacher_id/:class_id` - Delete and return the
-  matching assignment with `200`, or return `404` with
-  `{"error":"Teacher-class assignment not found"}` if it does not exist.
-- `POST /teacher_classes` - Create an assignment using `teacher_id`, `class_id`,
-  and `year`. If that combination already exists, return `409` with
-  `{"error":"Teacher-class combination already exists"}`. Otherwise return the
-  created record with `201`.
-- `DELETE /teacher_classes/:teacher_id/:class_id/:year` - Delete and return the
-  matching assignment with `200`, or return `404` with
-  `{"error":"Teacher-class assignment not found"}` if it does not exist.
+- `POST /teacher_classes` - Opretter en kobling ud fra `teacher_id` og
+  `class_id`. Findes kombinationen allerede, svares `409` med
+  `{"error":"Teacher-class combination already exists"}`. Ellers returneres den
+  oprettede række med `201`.
+- `DELETE /teacher_classes/:teacher_id/:class_id` - Sletter den matchende
+  kobling og returnerer den (`200`), eller `404` med
+  `{"error":"Teacher-class assignment not found"}` hvis den ikke findes.
 
-## Errors
+## Kør serveren
 
-Routes return `500` with `{"error":"Database error"}` when a database operation
-fails. The error is also logged by the server.
+1. Installer afhængigheder: `npm install`
+2. Opret en `.env`-fil med `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` og
+   `DB_NAME` til en PostgreSQL-database.
+3. Indlæs skema og data fra `Database/hogwarts_dump.sql` (og evt.
+   `Database/hogwarts_insert.sql`).
+4. Start serveren: `node server.js` (lytter på `http://localhost:3000`).
+
+## Test
+
+Endpoints testes manuelt med [Bruno](https://www.usebruno.com/)-samlingen i
+`hogwarts-API-test/`.
+
+1. Åbn Bruno og vælg _Open Collection_ -> `hogwarts-API-test`.
+2. Vælg miljøet `Developer` (sætter `BaseURL` til `http://localhost:3000`).
+3. Med serveren kørende: kør en request (fx `students/Add Student`) eller en
+   hel mappe.
+4. Tjek statuskode og JSON-svar mod beskrivelserne ovenfor.
+
+Foreslået rækkefølge: opret (`POST`), læs (`GET`), ret (`PUT`), slet
+(`DELETE`). Test også fejlsituationer: ukendte id'er (`404`) og dobbelt-`POST`
+(`400`/`409`).
+
+Pseudokode for endpoint-mønstrene findes i [pseudo.md](./pseudo.md).
+
+## Fejl
+
+Ruter svarer `500` med `{"error":"Database error"}`, hvis en databaseoperation
+fejler. Fejlen logges også af serveren.
