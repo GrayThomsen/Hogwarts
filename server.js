@@ -537,16 +537,21 @@ app.get("/student_classes", async (req, res) => {
 //Create a new student-class assignment
 app.post("/student_classes", async (req, res) => {
   try {
+    const { student_id, class_id, year } = req.body;
     const controlRead = await pool.query(
       "SELECT * FROM student_classes WHERE student_id = $1 AND class_id = $2 AND year = $3",
-      [req.body.student_id, req.body.class_id, req.body.year],
+      [student_id, class_id, year],
     );
     if (controlRead.rows.length > 0) {
       return res.status(409).json({
         error: "Student-class combination already exists",
       });
     }
-    const { student_id, class_id, year } = req.body;
+    if (year < 1 || year > 7) {
+      return res.status(400).json({
+        error: "Year must be between 1 and 7",
+      });
+    }
     const result = await pool.query(
       "INSERT INTO student_classes (student_id, class_id, year) VALUES ($1, $2, $3) RETURNING *",
       [student_id, class_id, year],
