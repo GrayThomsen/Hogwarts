@@ -1,4 +1,12 @@
+// Express app setup
 import express from "express";
+const app = express();
+
+app.use(express.json());
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
 
 //--------------------------------
 //* Import Controllers
@@ -9,15 +17,6 @@ import * as staffController from "./controllers/staff.controller.js";
 import * as classesController from "./controllers/classes.controller.js";
 import * as teacherClassesController from "./controllers/teacher_classes.controller.js";
 import * as studentClassesController from "./controllers/student_classes.controller.js";
-
-// Express app setup
-const app = express();
-
-app.use(express.json());
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
 
 //---------------------------------------------------------------------------------------------------------------
 //*  Student Data
