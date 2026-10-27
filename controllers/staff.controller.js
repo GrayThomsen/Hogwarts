@@ -15,7 +15,7 @@ export const getAllStaff = async (req, res) => {
     res.status(500).json({ error: "Database error" });
   }
 };
-
+// Get a staff member by ID
 export const getStaffById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -34,7 +34,7 @@ export const getStaffById = async (req, res) => {
 export const createStaff = async (req, res) => {
   try {
     const { first_name, last_name, role } = req.body;
-    // Prevents duplicate staff entries, which could cause confusion in the database.
+    // Prevents duplicate staff entries, which could cause confusion in the database. Although two different people could have the same name and role, this check helps maintain data integrity.
     const existing = await staffRepo.findStaff(first_name, last_name, role);
 
     if (existing) {

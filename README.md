@@ -1,3 +1,5 @@
+<!-- TODO SKAL LAVES OM, NU MED MODULER OG SEPERATION OF CONCERNS -->
+
 # Hogwarts API
 
 Dette dokument beskriver de API-ruter, der er implementeret i `server.js`.

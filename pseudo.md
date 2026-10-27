@@ -1,3 +1,5 @@
+<!-- TODO SKAL LAVES OM, NU MED MODULER OG SEPERATION OF CONCERNS -->
+
 # Pseudokode for endpoints
 
 Alle endpoints er `async` og pakket i try/catch. Fanger vi en fejl, logges den, og der svares `500 {"error":"Database error"}`. Dette gentages ikke nedenfor.
