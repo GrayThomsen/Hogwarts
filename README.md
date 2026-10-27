@@ -31,7 +31,6 @@ Fejlbeskederne i svarene er på engelsk, som i koden.
 
 ## Staff
 
-<!-- TODO: Overvej at tilføje modulbeskrivelser for staff -->
 
 - `GET /staff` - Returnerer alt personale (`200`). Findes ingen, svares `404`
   med `{"error":"Staff not found"}`.
