@@ -6,6 +6,8 @@ Dette dokument beskriver de API-ruter, der er implementeret i `server.js`.
 Serveren lytter på port `3000` og modtager JSON i request body.
 Fejlbeskederne i svarene er på engelsk, som i koden.
 
+<!-- Her er min note der skal ind -->
+
 ## Houses
 
 - `GET /houses` - Returnerer alle huse (`200`). Findes der ingen, svares `404`
