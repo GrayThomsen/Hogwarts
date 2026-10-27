@@ -10,6 +10,7 @@ import * as classesController from "./controllers/classes.controller.js";
 import * as teacherClassesController from "./controllers/teacher_classes.controller.js";
 import * as studentClassesController from "./controllers/student_classes.controller.js";
 
+// Express app setup
 const app = express();
 
 app.use(express.json());
