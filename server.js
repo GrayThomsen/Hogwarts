@@ -19,6 +19,12 @@ import * as teacherClassesController from "./controllers/teacher_classes.control
 import * as studentClassesController from "./controllers/student_classes.controller.js";
 
 //---------------------------------------------------------------------------------------------------------------
+//*  Routes
+//? Assuming that routes will take the position of the controllers, as they are moved into their respective files.
+//---------------------------------------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------------------------------------------
 //*  Student Data
 //---------------------------------------------------------------------------------------------------------------
 app.get("/students", studentsController.getAllStudents);
@@ -52,7 +58,7 @@ app.put("/classes/:id", classesController.updateClass);
 app.delete("/classes/:id", classesController.deleteClass);
 
 //---------------------------------------------------------------------------------------------------------------
-//*  Teacher Class Data
+//*  Teacher_Classes Data
 //---------------------------------------------------------------------------------------------------------------
 app.get("/teacher_classes", teacherClassesController.getAllTeacherClasses);
 app.post("/teacher_classes", teacherClassesController.createTeacherClass);
@@ -62,7 +68,7 @@ app.delete(
 );
 
 //---------------------------------------------------------------------------------------------------------------
-//*  Student Class Data
+//*  Student_Classes Data
 //---------------------------------------------------------------------------------------------------------------
 app.get("/student_classes", studentClassesController.getAllStudentClasses);
 app.post("/student_classes", studentClassesController.createStudentClass);
