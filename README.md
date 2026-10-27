@@ -31,7 +31,6 @@ Fejlbeskederne i svarene er på engelsk, som i koden.
 
 ## Staff
 
-
 - `GET /staff` - Returnerer alt personale (`200`). Findes ingen, svares `404`
   med `{"error":"Staff not found"}`.
 - `GET /staff/:id` - Returnerer medarbejderen med det id (`200`). Findes
