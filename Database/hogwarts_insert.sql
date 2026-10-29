@@ -146,7 +146,7 @@ SELECT
 
 SELECT
     setval (
-        pg_get_serial_sequence ('public.student_classes', 'student_id'),
+        pg_get_serial_sequence ('public.student_classes', 'id'),
         16,
         true
     );
