@@ -1,4 +1,4 @@
--- Hogwarts database: converted from PostgreSQL pg_dump to ordinary SQL.
+-- Hogwarts database: converted from PostgreSQL pg_dump to PostgreSQL SQL.
 -- Run in a NEW, EMPTY hogwarts database using DataGrip Query Console.
 BEGIN;
 
@@ -141,13 +141,6 @@ SELECT
     setval (
         pg_get_serial_sequence ('public.staff', 'id'),
         9,
-        true
-    );
-
-SELECT
-    setval (
-        pg_get_serial_sequence ('public.student_classes', 'id'),
-        16,
         true
     );
 
