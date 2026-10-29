@@ -104,7 +104,8 @@ VALUES
     (12, 'Padma', 'Patil', 3),
     (13, 'Justin', 'Finch-Fletchley', 4),
     (14, 'Luna', 'Lovegood', 3),
-    (15, 'Emil', 'Thomsen', 2);
+    (15, 'Emil', 'Thomsen', 2),
+    (16, 'Peter', 'Lind', 2);
 
 INSERT INTO
     public.student_classes (student_id, class_id, year)
@@ -145,8 +146,15 @@ SELECT
 
 SELECT
     setval (
+        pg_get_serial_sequence ('public.student_classes', 'student_id'),
+        16,
+        true
+    );
+
+SELECT
+    setval (
         pg_get_serial_sequence ('public.students', 'id'),
-        15,
+        16,
         true
     );
 
