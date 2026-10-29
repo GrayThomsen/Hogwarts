@@ -19,6 +19,26 @@ export const getAllClasses = async (req, res) => {
     });
   }
 };
+
+export const getClasses = async (req, res) => {
+  try {
+    const classes = await classesRepo.getAllClasses();
+
+    if (classes.length === 0) {
+      return res.status(404).json({
+        error: "Classes not found",
+      });
+    }
+
+    res.status(200).json(classes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Database error",
+    });
+  }
+};
+
 // Get a specific Hogwarts class by ID
 export const getClassById = async (req, res) => {
   try {

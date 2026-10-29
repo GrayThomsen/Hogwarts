@@ -1,77 +1,24 @@
 // Express app setup
 import express from "express";
+
+// Routers
+//* Notice the complete seperation of concerns.
+import housesRouter from "./routers/houses.router.js";
+import studentsRouter from "./routers/students.router.js";
+import staffRouter from "./routers/staff.router.js";
+import classesRouter from "./routers/classes.router.js";
+import studentClassesRouter from "./routers/student_classes.router.js";
+import teacherClassesRouter from "./routers/teacher_classes.router.js";
 const app = express();
 
 app.use(express.json());
+app.use(studentsRouter);
+app.use(staffRouter);
+app.use(classesRouter);
+app.use(studentClassesRouter);
+app.use(teacherClassesRouter);
+app.use(housesRouter);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
-
-//--------------------------------
-//* Import Controllers
-//--------------------------------
-import * as studentsController from "./controllers/students.controller.js";
-import * as housesController from "./controllers/houses.controller.js";
-import * as staffController from "./controllers/staff.controller.js";
-import * as classesController from "./controllers/classes.controller.js";
-import * as teacherClassesController from "./controllers/teacher_classes.controller.js";
-import * as studentClassesController from "./controllers/student_classes.controller.js";
-
-//---------------------------------------------------------------------------------------------------------------
-//*  Routes
-//? Assuming that routes will take the position of the controllers, as they are moved into their respective files.
-//---------------------------------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------------------------------------
-//*  Student Data
-//---------------------------------------------------------------------------------------------------------------
-app.get("/students", studentsController.getAllStudents);
-app.get("/students/:id", studentsController.getStudentById);
-app.post("/students", studentsController.createStudent);
-app.put("/students/:id", studentsController.updateStudent);
-app.delete("/students/:id", studentsController.deleteStudent);
-
-//---------------------------------------------------------------------------------------------------------------
-//*  Houses Data
-//---------------------------------------------------------------------------------------------------------------
-app.get("/houses", housesController.getAllHouses);
-app.get("/houses/:id", housesController.getHouseById);
-
-//---------------------------------------------------------------------------------------------------------------
-//*  Staff Data
-//---------------------------------------------------------------------------------------------------------------
-app.get("/staff", staffController.getAllStaff);
-app.get("/staff/:id", staffController.getStaffById);
-app.post("/staff", staffController.createStaff);
-app.put("/staff/:id", staffController.updateStaff);
-app.delete("/staff/:id", staffController.deleteStaff);
-
-//---------------------------------------------------------------------------------------------------------------
-//*  Class Data
-//---------------------------------------------------------------------------------------------------------------
-app.get("/classes", classesController.getAllClasses);
-app.get("/classes/:id", classesController.getClassById);
-app.post("/classes", classesController.createClass);
-app.put("/classes/:id", classesController.updateClass);
-app.delete("/classes/:id", classesController.deleteClass);
-
-//---------------------------------------------------------------------------------------------------------------
-//*  Teacher_Classes Data
-//---------------------------------------------------------------------------------------------------------------
-app.get("/teacher_classes", teacherClassesController.getAllTeacherClasses);
-app.post("/teacher_classes", teacherClassesController.createTeacherClass);
-app.delete(
-  "/teacher_classes/:teacher_id/:class_id",
-  teacherClassesController.deleteTeacherClass,
-);
-
-//---------------------------------------------------------------------------------------------------------------
-//*  Student_Classes Data
-//---------------------------------------------------------------------------------------------------------------
-app.get("/student_classes", studentClassesController.getAllStudentClasses);
-app.post("/student_classes", studentClassesController.createStudentClass);
-app.delete(
-  "/student_classes/:student_id/:class_id/:year",
-  studentClassesController.deleteStudentClass,
-);

@@ -7,7 +7,7 @@ export async function getAllStudentClasses() {
   return result.rows;
 }
 
-export async function findStudentClass(student_id, class_id, year) {
+export async function findStudentClassByIdsAndYear(student_id, class_id, year) {
   const result = await pool.query(
     "SELECT * FROM student_classes WHERE student_id = $1 AND class_id = $2 AND year = $3",
     [student_id, class_id, year],
