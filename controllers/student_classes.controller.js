@@ -16,34 +16,16 @@ export const getAllStudentClasses = async (req, res) => {
   }
 };
 
-export const findStudentClassByIdsAndYear = async (req, res) => {
-  try {
-    const { student_id, class_id, year } = req.params;
-    const assignment = await studentClassesRepo.findStudentClassByIdsAndYear(
-      student_id,
-      class_id,
-      year,
-    );
-
-    if (!assignment) {
-      return res
-        .status(404)
-        .json({ error: "Student-class assignment not found" });
-    }
-    res.status(200).json(assignment);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Database error" });
-  }
-};
-
 export const createStudentClass = async (req, res) => {
   try {
+    //!This seems quite intense...
     const { student_id, class_id, year } = req.body;
-    const existing = await studentClassesRepo.findStudentClassByIdsAndYear(
-      student_id,
-      class_id,
-      year,
+    const allAssignments = await studentClassesRepo.getAllStudentClasses();
+    const existing = allAssignments.find(
+      (assignment) =>
+        assignment.student_id === student_id &&
+        assignment.class_id === class_id &&
+        assignment.year === year,
     );
 
     if (existing) {

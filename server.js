@@ -11,6 +11,7 @@ import studentClassesRouter from "./routers/student_classes.router.js";
 import teacherClassesRouter from "./routers/teacher_classes.router.js";
 const app = express();
 
+// Middleware for parsing JSON bodies
 app.use(express.json());
 app.use(studentsRouter);
 app.use(staffRouter);
@@ -19,6 +20,7 @@ app.use(studentClassesRouter);
 app.use(teacherClassesRouter);
 app.use(housesRouter);
 
+// Start the server
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
