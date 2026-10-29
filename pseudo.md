@@ -1,5 +1,3 @@
-<!-- TODO SKAL LAVES OM, NU MED MODULER OG SEPERATION OF CONCERNS -->
-
 # Pseudokode for endpoints
 
 Alle endpoints er `async` og pakket i try/catch. Fanger vi en fejl, logges den, og der svares `500 {"error":"Database error"}`. Dette gentages ikke nedenfor.
@@ -105,5 +103,5 @@ Ellers:
 ## Bemærkninger
 
 - Der findes ingen `/teachers`-endpoints. Lærere er rækker i `staff`; `teacher_classes.teacher_id` peger på et staff-id. `GET /teachers` ville følge mønster 1 og `PUT /teachers/:id` mønster 4.
-- Houses er kun læsbare (kun mønster 1 og 2).
-- `student_classes` og `teacher_classes` har ingen GET-via-id og ingen PUT.
+- Houses er kun læsbare (kun mønster 1 og 2). Der er altså ingen måde at nye huse kan skabes eller eksisterende redigeres.
+- `student_classes` og `teacher_classes` har ingen GET-via-id og ingen PUT. At opdatere kunne være fint at have, men det er ikke implementeret i dette mønster. Så du må slette og oprette påny hvis du vil ændre en eksisterende kobling.

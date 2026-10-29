@@ -4,7 +4,7 @@
 
 Dette dokument beskriver de API-ruter, der er implementeret i `server.js`.
 Serveren lytter på port `3000` og modtager JSON i request body.
-Fejlbeskederne i svarene er på engelsk, som i koden.
+Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og følger konventionerne for velstruktureret kodedesign.
 
 ## Houses
 
@@ -94,7 +94,7 @@ Fejlbeskederne i svarene er på engelsk, som i koden.
    `Database/hogwarts_insert.sql`).
 4. Start serveren: `node server.js` (lytter på `http://localhost:3000`).
 
-## Test
+## Til Peter
 
 Endpoints testes manuelt med [Bruno](https://www.usebruno.com/)-samlingen i
 `hogwarts-API-test/`.
@@ -103,15 +103,12 @@ Endpoints testes manuelt med [Bruno](https://www.usebruno.com/)-samlingen i
 2. Vælg miljøet `Developer` (sætter `BaseURL` til `http://localhost:3000`).
 3. Med serveren kørende: kør en request (fx `students/Add Student`) eller en
    hel mappe.
-4. Tjek statuskode og JSON-svar mod beskrivelserne ovenfor.
+4. Bemærk at der er opsat parametre i de fleste Bruno-requests.
+5. Tjek statuskode og JSON-svar mod beskrivelserne ovenfor.
 
-Foreslået rækkefølge: opret (`POST`), læs (`GET`), ret (`PUT`), slet
-(`DELETE`). Test også fejlsituationer: ukendte id'er (`404`) og dobbelt-`POST`
-(`400`/`409`).
-
-Pseudokode for endpoint-mønstrene findes i [pseudo.md](./pseudo.md).
+Pseudokode _Eller suppekode, ;-)"_ for endpoint-mønstrene findes i [pseudo.md](./pseudo.md).
 
 ## Fejl
 
 Ruter svarer `500` med `{"error":"Database error"}`, hvis en databaseoperation
-fejler. Fejlen logges også af serveren.
+fejler. Fejlen logges også af serveren. Selvom du (Peter), ikke ønskede at se fejl 500, så er det min fallback-løsning for uforudsete databaseproblemer.
