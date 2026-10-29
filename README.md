@@ -60,7 +60,7 @@ Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og
 - `DELETE /classes/:id` - Sletter klassen og returnerer rækken (`200`), eller
   `404` med `{"error":"Class not found"}` hvis id ikke findes.
 
-## Student-class assignments
+## Student-classes assignments
 
 - `GET /student_classes` - Returnerer alle elev-klasse-koblinger (`200`).
   Findes ingen, svares `404` med `{"error":"No student-class assignments found"}`.
@@ -72,7 +72,7 @@ Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og
   kobling og returnerer den (`200`), eller `404` med
   `{"error":"Student-class assignment not found"}` hvis den ikke findes.
 
-## Teacher-class assignments
+## Teacher-classes assignments
 
 - `GET /teacher_classes` - Returnerer alle lærer-klasse-koblinger (`200`).
   Findes ingen, svares `404` med
