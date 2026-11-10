@@ -9,14 +9,18 @@ export const getAllHouses = async (req, res) => {
 
     if (AllHouses.length === 0) {
       return res.status(404).json({
-        error: "Houses not found",
+        message: "No houses found",
+        error: "Not Found",
+        status: 404,
       });
     }
     res.status(200).json(AllHouses);
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      error: "Database error",
+      message: "Failed to retrieve houses",
+      error: "internal server error",
+      status: 500,
     });
   }
 };
@@ -28,7 +32,9 @@ export const getHouseById = async (req, res) => {
 
     if (!house) {
       return res.status(404).json({
-        error: "House not found",
+        message: "House not found",
+        error: "Not Found",
+        status: 404,
       });
     }
 
@@ -36,7 +42,9 @@ export const getHouseById = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      error: "Database error",
+      message: "Failed to retrieve house",
+      error: "internal server error",
+      status: 500,
     });
   }
 };
