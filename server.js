@@ -9,7 +9,10 @@ import staffRouter from "./routers/staff.router.js";
 import classesRouter from "./routers/classes.router.js";
 import studentClassesRouter from "./routers/student_classes.router.js";
 import teacherClassesRouter from "./routers/teacher_classes.router.js";
+import errorHandler from "./errorhandling/errorhandler.js";
 const app = express();
+
+app.use(errorHandler);
 
 // Middleware for parsing JSON bodies
 app.use(express.json());
