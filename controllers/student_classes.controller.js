@@ -1,23 +1,18 @@
 import * as studentClassesRepo from "../repos/student_classes.repo.js";
+import httpError from "../errorhandling/httpError.js";
 
 //* Controller functions for handling student-class assignments
 
 export const getAllStudentClasses = async (req, res) => {
-  //try {
   const assignments = await studentClassesRepo.getAllStudentClasses();
 
   if (assignments.length === 0) {
-    return res.status(404).json({ error: "Student not found" });
+    throw new httpError(404, "No student-class assignments found");
   }
-  res.status(200).json(assignments);
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ error: "Database error" });
-  //   }
-};
+  res.status(200).  json(assignments);
+  };
 
 export const createStudentClass = async (req, res) => {
-  // try {
   const { student_id, class_id, year } = req.body;
   const allAssignments = await studentClassesRepo.getAllStudentClasses();
   const existing = allAssignments.find(
@@ -28,12 +23,10 @@ export const createStudentClass = async (req, res) => {
   );
 
   if (existing) {
-    return res
-      .status(409)
-      .json({ error: "Student-class combination already exists" });
+    throw new httpError(409, "Student-class combination already exists");
   }
   if (year < 1 || year > 7) {
-    return res.status(400).json({ error: "Year must be between 1 and 7" });
+    throw new httpError(400, "Year must be between 1 and 7");
   }
 
   const created = await studentClassesRepo.createStudentClass(
@@ -41,15 +34,10 @@ export const createStudentClass = async (req, res) => {
     class_id,
     year,
   );
-  res.status(201).json(created);
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ error: "Database error" });
-  // }
-};
+  res.status(201).  json(created);
+  };
 
 export const deleteStudentClass = async (req, res) => {
-  // try {
   const { student_id, class_id, year } = req.params;
   const deleted = await studentClassesRepo.deleteStudentClass(
     student_id,
@@ -57,14 +45,8 @@ export const deleteStudentClass = async (req, res) => {
     year,
   );
 
-  // if (!deleted) {
-  //   return res
-  //     .status(404)
-  //     .json({ error: "Student-class assignment not found" });
-  // }
-  res.status(200).json(deleted);
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ error: "Database error" });
-  // }
-};
+  if (!deleted) {
+    throw new httpError(404, "Student-class assignment not found");
+  }
+  res.status(200).  json(deleted);
+  };

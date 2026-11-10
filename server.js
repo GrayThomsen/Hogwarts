@@ -21,9 +21,9 @@ app.use(studentClassesRouter);
 app.use(teacherClassesRouter);
 app.use(housesRouter);
 
+app.use(errorHandler);
+
 // Start the server
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
-
-app.use(errorHandler);
