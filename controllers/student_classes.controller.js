@@ -17,8 +17,7 @@ export const getAllStudentClasses = async (req, res) => {
 };
 
 export const createStudentClass = async (req, res) => {
-  //try {
-  //!This seems quite intense...
+  // try {
   const { student_id, class_id, year } = req.body;
   const allAssignments = await studentClassesRepo.getAllStudentClasses();
   const existing = allAssignments.find(

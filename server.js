@@ -12,8 +12,6 @@ import teacherClassesRouter from "./routers/teacher_classes.router.js";
 import errorHandler from "./errorhandling/errorhandler.js";
 const app = express();
 
-app.use(errorHandler);
-
 // Middleware for parsing JSON bodies
 app.use(express.json());
 app.use(studentsRouter);
@@ -27,3 +25,5 @@ app.use(housesRouter);
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
+
+app.use(errorHandler);

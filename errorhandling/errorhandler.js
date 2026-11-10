@@ -1,10 +1,7 @@
-import express from "express";
-const app = express();
-
-export default app.use((err, req, res, next) => {
-  res.status(500).json({
-    error: "Something has gone severely wrong!",
-    message: err.message,
-    status: res.statusCode,
+export default (err, req, res, next) => {
+  res.status(err.statusCode || err.status || 500).json({
+    error: err.name || "Internal Server Error",
+    message: err.message || "Something has gone severely wrong!",
+    status: err.statusCode || err.status || 500,
   });
-});
+};

@@ -1,4 +1,5 @@
 import * as housesRepo from "../repos/houses.repo.js";
+import httpError from "../errorhandling/httpError.js";
 
 //* Controller functions for handling Hogwarts houses data
 
@@ -8,13 +9,9 @@ export const getAllHouses = async (req, res) => {
   const AllHouses = await housesRepo.getAllHouses();
 
   if (AllHouses.length === 0) {
-    return res.status(404).json({
-      message: "No houses found",
-      error: "Not Found",
-      status: 404,
-    });
+    throw new httpError(404, "No houses found");
   }
-  res.status(200).json(AllHouses);
+  // res.status(200).json(AllHouses);
   // } catch (error) {
   //   console.error(error);
   //   res.status(500).json({
@@ -31,14 +28,12 @@ export const getHouseById = async (req, res) => {
   const house = await housesRepo.getHouseById(id);
 
   if (!house) {
-    return res.status(404).json({
-      message: "House not found",
-      error: "Not Found",
-      status: res.statusCode,
-    });
+    throw new httpError(404, "House not found");
   }
-
+else {
   res.status(200).json(house);
+}
+
   //   } catch (error) {
   //     console.error(error);
   //     res.status(500).json({
