@@ -9,8 +9,8 @@ export const getAllStudentClasses = async (req, res) => {
   if (assignments.length === 0) {
     throw new httpError(404, "No student-class assignments found");
   }
-  res.status(200).  json(assignments);
-  };
+  res.status(200).json(assignments);
+};
 
 export const createStudentClass = async (req, res) => {
   const { student_id, class_id, year } = req.body;
@@ -34,8 +34,8 @@ export const createStudentClass = async (req, res) => {
     class_id,
     year,
   );
-  res.status(201).  json(created);
-  };
+  res.status(201).json(created);
+};
 
 export const deleteStudentClass = async (req, res) => {
   const { student_id, class_id, year } = req.params;
@@ -48,5 +48,5 @@ export const deleteStudentClass = async (req, res) => {
   if (!deleted) {
     throw new httpError(404, "Student-class assignment not found");
   }
-  res.status(200).  json(deleted);
-  };
+  res.status(200).json(deleted);
+};

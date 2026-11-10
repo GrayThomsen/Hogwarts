@@ -6,69 +6,65 @@ import httpError from "../errorhandling/httpError.js";
 export const getAllStudents = async (req, res) => {
   const students = await studentsRepo.getAllStudents();
 
-    if (students.length === 0) {
-      throw new httpError(404, "No students found");
-    }
-    res.json(students);
-    };
+  if (students.length === 0) {
+    throw new httpError(404, "No students found");
+  }
+  res.json(students);
+};
 
 export const getStudentById = async (req, res) => {
   const { id } = req.params;
-    const student = await studentsRepo.getStudentById(id);
+  const student = await studentsRepo.getStudentById(id);
 
-    if (!student) {
-      throw new httpError(404, "Student not found");
-    }
-    res.json(student);
-    };
+  if (!student) {
+    throw new httpError(404, "Student not found");
+  }
+  res.json(student);
+};
 
 export const createStudent = async (req, res) => {
   const { first_name, last_name, house } = req.body;
-    //? Not against the rules, but prevents accidental re-creation of the same student.
-    const existing = await studentsRepo.findStudent(
-      first_name,
-      last_name,
-      house,
-    );
+  //? Not against the rules, but prevents accidental re-creation of the same student.
+  const existing = await studentsRepo.findStudent(first_name, last_name, house);
 
-    if (existing) {
-      throw new httpError(400, "Student already exists");
-    }
+  if (existing) {
+    throw new httpError(400, "Student already exists");
+  }
 
-    const created = await studentsRepo.createStudent(
-      first_name,
-      last_name,
-      house,
-    );
-    res.status(201).    json(created);
-    };
+  const created = await studentsRepo.createStudent(
+    first_name,
+    last_name,
+    house,
+  );
+  res.status(201).json(created);
+};
 
 export const updateStudent = async (req, res) => {
   const { id } = req.params;
-    const { first_name, last_name, house } = req.body;
-    const existing = await studentsRepo.getStudentById(id);
+  const { first_name, last_name, house } = req.body;
+  const existing = await studentsRepo.getStudentById(id);
 
-    if (!existing) {
-      throw new httpError(404, "Student not found");
-    }
+  if (!existing) {
+    throw new httpError(404, "Student not found");
+  }
 
-    const updated = await studentsRepo.updateStudent(
-      id,
-      first_name,
-      last_name,
-      house,
-    );
-    res.status(200).    json(updated);
-    };
+  const updated = await studentsRepo.updateStudent(
+    id,
+    first_name,
+    last_name,
+    house,
+  );
+  res.status(200).json(updated);
+};
 
 export const deleteStudent = async (req, res) => {
-    const { id } = req.params;
-    const existing = await studentsRepo.getStudentById(id);
+  const { id } = req.params;
+  const existing = await studentsRepo.getStudentById(id);
 
-    if (!existing) {
-      throw new httpError(404, "Student not found");
-    }
+  if (!existing) {
+    throw new httpError(404, "Student not found");
+  }
 
-    const deleted = await studentsRepo.deleteStudent(id);
-    res.status(200).    json(deleted);
-    };
+  const deleted = await studentsRepo.deleteStudent(id);
+  res.status(200).json(deleted);
+};
