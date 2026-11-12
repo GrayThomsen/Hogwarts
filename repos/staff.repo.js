@@ -23,28 +23,38 @@ where staff.id = $1`,
   return result.rows[0];
 }
 
-export async function findStaff(first_name, last_name, role, house) {
+export async function findStaff(teacher) {
   const result = await pool.query(
     "SELECT * FROM staff WHERE first_name = $1 AND last_name = $2 AND role = $3 AND house = $4",
-    [first_name, last_name, role, house],
+    [teacher.first_name, teacher.last_name, teacher.role, teacher.house],
   );
   return result.rows[0];
 }
 
-export async function createStaff(first_name, last_name, role, house) {
+export async function createStaff(teacher) {
   const result = await pool.query(
-    "INSERT INTO staff (first_name, last_name, role, house) VALUES ($1, $2, $3, $4) RETURNING *",
-    [first_name, last_name, role, house],
+    "INSERT INTO staff (first_name, last_name, role, house) VALUES ($1, $2, $3, $4) RETURNING id",
+    [teacher.first_name, teacher.last_name, teacher.role, teacher.house],
   );
-  return result.rows[0];
+  const newStaffId = result.rows[0].id;
+
+console.log(teacher.house);
+
+  return getStaffById(newStaffId);
 }
 
-export async function updateStaff(id, first_name, last_name, role, house) {
+export async function updateStaff(id, teacher) {
   const result = await pool.query(
-    "UPDATE staff SET first_name = $1, last_name = $2, role = $3, house = $4 WHERE id = $5 RETURNING *",
-    [first_name, last_name, role, house, id],
+    "UPDATE staff SET first_name = $1, last_name = $2, role = $3, house = $4 WHERE id = $5 RETURNING id",
+    [teacher.first_name, teacher.last_name, teacher.role, teacher.house, id],
   );
-  return result.rows[0];
+
+  if (result.rows.length === 0) {
+    return null;
+  }
+  const updatedStaffId = result.rows[0].id;
+
+  return getStaffById(updatedStaffId);
 }
 
 export async function deleteStaff(id) {
