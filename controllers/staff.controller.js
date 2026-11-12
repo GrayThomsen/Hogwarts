@@ -1,7 +1,7 @@
 import * as staffRepo from "../repos/staff.repo.js";
 import httpError from "../errorhandling/httpError.js";
 import createTeacherSchema from "../dtos/createTeacher.dto.js";
-import UpdateTeacherSchema from "../dtos/updateTeacher.dto.js";
+import updateTeacherSchema from "../dtos/updateTeacher.dto.js";
 
 //* Controller functions for handling Hogwarts staff data
 
@@ -25,21 +25,12 @@ export const getStaffById = async (req, res) => {
 };
 
 export const createStaff = async (req, res) => {
-  const teacherData = req.body;
-
-  const validation = createTeacherSchema.safeParse(teacherData);
+  const validation = createTeacherSchema.safeParse(req.body);
   if (!validation.success) {
-    const errors = validation.error.flatten();
-    const firstError =
-      Object.values(errors.fieldErrors)[0]?.[0] ||
-      Object.values(errors.formErrors)?.[0] ||
-      "Validation failed";
-    throw new httpError(400, firstError);
+    throw new httpError(400, validation.error.errors[0]?.message || "Validation failed");
   }
 
-  // Prevents duplicate staff entries, which could cause confusion in the database. Although two different people could have the same name and role, this check helps maintain data integrity.
   const existing = await staffRepo.findStaff(validation.data);
-
   if (existing) {
     throw new httpError(400, "Staff member already exists");
   }
@@ -47,19 +38,16 @@ export const createStaff = async (req, res) => {
   const newStaff = await staffRepo.createStaff(validation.data);
   res.status(201).json(newStaff);
 };
-// Update a staff member by ID
+
 export const updateStaff = async (req, res) => {
   const { id } = req.params;
-  const teacherData = req.body;
-
-  const validation = UpdateTeacherSchema.safeParse(teacherData);
+  
+  const validation = updateTeacherSchema.safeParse(req.body);
   if (!validation.success) {
-    const errorMessage = validation.error.errors[0]?.message || "Validation failed";
-    throw new httpError(400, errorMessage);
+    throw new httpError(400, validation.error.errors[0]?.message || "Validation failed");
   }
 
   const existing = await staffRepo.getStaffById(id);
-
   if (!existing) {
     throw new httpError(404, "Staff member not found");
   }

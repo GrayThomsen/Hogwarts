@@ -44,17 +44,44 @@ console.log(teacher.house);
 }
 
 export async function updateStaff(id, teacher) {
-  const result = await pool.query(
-    "UPDATE staff SET first_name = $1, last_name = $2, role = $3, house = $4 WHERE id = $5 RETURNING id",
-    [teacher.first_name, teacher.last_name, teacher.role, teacher.house, id],
-  );
+  const updates = [];
+  const values = [];
+  let paramCount = 1;
+
+  if (teacher.first_name !== undefined) {
+    updates.push(`first_name = $${paramCount}`);
+    values.push(teacher.first_name);
+    paramCount++;
+  }
+  if (teacher.last_name !== undefined) {
+    updates.push(`last_name = $${paramCount}`);
+    values.push(teacher.last_name);
+    paramCount++;
+  }
+  if (teacher.role !== undefined) {
+    updates.push(`role = $${paramCount}`);
+    values.push(teacher.role);
+    paramCount++;
+  }
+  if (teacher.house !== undefined) {
+    updates.push(`house = $${paramCount}`);
+    values.push(teacher.house);
+    paramCount++;
+  }
+
+  if (updates.length === 0) {
+    return getStaffById(id);
+  }
+
+  values.push(id);
+  const query = `UPDATE staff SET ${updates.join(", ")} WHERE id = $${paramCount} RETURNING id`;
+  const result = await pool.query(query, values);
 
   if (result.rows.length === 0) {
     return null;
   }
-  const updatedStaffId = result.rows[0].id;
 
-  return getStaffById(updatedStaffId);
+  return getStaffById(result.rows[0].id);
 }
 
 export async function deleteStaff(id) {
