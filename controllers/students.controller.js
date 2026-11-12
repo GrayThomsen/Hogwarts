@@ -23,37 +23,28 @@ export const getStudentById = async (req, res) => {
 };
 
 export const createStudent = async (req, res) => {
-  const { first_name, last_name, house } = req.body;
+  const student = req.body;
   //? Not against the rules, but prevents accidental re-creation of the same student.
-  const existing = await studentsRepo.findStudent(first_name, last_name, house);
+  const existing = await studentsRepo.findStudent(student);
 
   if (existing) {
     throw new httpError(400, "Student already exists");
   }
 
-  const created = await studentsRepo.createStudent(
-    first_name,
-    last_name,
-    house,
-  );
+  const created = await studentsRepo.createStudent(student);
   res.status(201).json(created);
 };
 
 export const updateStudent = async (req, res) => {
   const { id } = req.params;
-  const { first_name, last_name, house } = req.body;
+  const student = req.body;
   const existing = await studentsRepo.getStudentById(id);
 
   if (!existing) {
     throw new httpError(404, "Student not found");
   }
 
-  const updated = await studentsRepo.updateStudent(
-    id,
-    first_name,
-    last_name,
-    house,
-  );
+  const updated = await studentsRepo.updateStudent(id, student);
   res.status(200).json(updated);
 };
 

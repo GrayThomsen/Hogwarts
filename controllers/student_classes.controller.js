@@ -13,37 +13,29 @@ export const getAllStudentClasses = async (req, res) => {
 };
 
 export const createStudentClass = async (req, res) => {
-  const { student_id, class_id, year } = req.body;
+  const assignment = req.body;
   const allAssignments = await studentClassesRepo.getAllStudentClasses();
   const existing = allAssignments.find(
-    (assignment) =>
-      assignment.student_id === student_id &&
-      assignment.class_id === class_id &&
-      assignment.year === year,
+    (existing) =>
+      existing.student_id === assignment.student_id &&
+      existing.class_id === assignment.class_id &&
+      existing.year === assignment.year,
   );
 
   if (existing) {
     throw new httpError(409, "Student-class combination already exists");
   }
-  if (year < 1 || year > 7) {
+  if (assignment.year < 1 || assignment.year > 7) {
     throw new httpError(400, "Year must be between 1 and 7");
   }
 
-  const created = await studentClassesRepo.createStudentClass(
-    student_id,
-    class_id,
-    year,
-  );
+  const created = await studentClassesRepo.createStudentClass(assignment);
   res.status(201).json(created);
 };
 
 export const deleteStudentClass = async (req, res) => {
-  const { student_id, class_id, year } = req.params;
-  const deleted = await studentClassesRepo.deleteStudentClass(
-    student_id,
-    class_id,
-    year,
-  );
+  const assignment = req.params;
+  const deleted = await studentClassesRepo.deleteStudentClass(assignment);
 
   if (!deleted) {
     throw new httpError(404, "Student-class assignment not found");

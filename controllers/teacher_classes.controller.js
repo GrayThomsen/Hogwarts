@@ -13,29 +13,20 @@ export const getAllTeacherClasses = async (req, res) => {
 };
 
 export const createTeacherClass = async (req, res) => {
-  const { teacher_id, class_id } = req.body;
-  const existing = await teacherClassesRepo.findTeacherClass(
-    teacher_id,
-    class_id,
-  );
+  const assignment = req.body;
+  const existing = await teacherClassesRepo.findTeacherClass(assignment);
 
   if (existing) {
     throw new httpError(409, "Teacher-class combination already exists");
   }
 
-  const created = await teacherClassesRepo.createTeacherClass(
-    teacher_id,
-    class_id,
-  );
+  const created = await teacherClassesRepo.createTeacherClass(assignment);
   res.status(201).json(created);
 };
 
 export const deleteTeacherClass = async (req, res) => {
-  const { teacher_id, class_id } = req.params;
-  const deleted = await teacherClassesRepo.deleteTeacherClass(
-    teacher_id,
-    class_id,
-  );
+  const assignment = req.params;
+  const deleted = await teacherClassesRepo.deleteTeacherClass(assignment);
 
   if (!deleted) {
     throw new httpError(404, "Teacher-class assignment not found");

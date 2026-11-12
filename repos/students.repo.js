@@ -25,26 +25,26 @@ export async function getStudentById(id) {
   return result.rows[0];
 }
 
-export async function findStudent(first_name, last_name, house) {
+export async function findStudent(student) {
   const result = await pool.query(
     "SELECT * FROM students WHERE first_name = $1 AND last_name = $2 AND house = $3",
-    [first_name, last_name, house],
+    [student.first_name, student.last_name, student.house],
   );
   return result.rows[0];
 }
 
-export async function createStudent(first_name, last_name, house) {
+export async function createStudent(student) {
   const result = await pool.query(
     "INSERT INTO students (first_name, last_name, house) VALUES ($1, $2, $3) RETURNING *",
-    [first_name, last_name, house],
+    [student.first_name, student.last_name, student.house],
   );
   return result.rows[0];
 }
 
-export async function updateStudent(id, first_name, last_name, house) {
+export async function updateStudent(id, student) {
   const result = await pool.query(
     "UPDATE students SET first_name = $1, last_name = $2, house = $3 WHERE id = $4 RETURNING *",
-    [first_name, last_name, house, id],
+    [student.first_name, student.last_name, student.house, id],
   );
   return result.rows[0];
 }
