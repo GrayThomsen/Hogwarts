@@ -27,7 +27,10 @@ export const getStaffById = async (req, res) => {
 export const createStaff = async (req, res) => {
   const validation = createTeacherSchema.safeParse(req.body);
   if (!validation.success) {
-    throw new httpError(400, validation.error.errors[0]?.message || "Validation failed");
+    throw new httpError(
+      400,
+      validation.error.errors[0]?.message || "Validation failed",
+    );
   }
 
   const existing = await staffRepo.findStaff(validation.data);
@@ -41,20 +44,13 @@ export const createStaff = async (req, res) => {
 
 export const updateStaff = async (req, res) => {
   const { id } = req.params;
-  
-  const validation = updateTeacherSchema.safeParse(req.body);
-  if (!validation.success) {
-    throw new httpError(400, validation.error.errors[0]?.message || "Validation failed");
-  }
-
-  const existing = await staffRepo.getStaffById(id);
-  if (!existing) {
-    throw new httpError(404, "Staff member not found");
-  }
+  const validation = updateTeacherSchema.parse(req.body);
 
   const updated = await staffRepo.updateStaff(id, validation.data);
   res.status(200).json(updated);
 };
+
+// Delete a staff member by ID
 
 export const deleteStaff = async (req, res) => {
   const { id } = req.params;
