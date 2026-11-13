@@ -9,6 +9,7 @@ import staffRouter from "./routers/staff.router.js";
 import subjectsRouter from "./routers/classes.router.js";
 import studentSubjectRouter from "./routers/student_subjects.router.js";
 import staffSubjectsRouter from "./routers/staff_subjects.router.js";
+import wandsRouter from "./routers/wands.router.js";
 import examsRouter from "./routers/exams.router.js";
 
 import errorHandler from "./errorhandling/errorhandler.js";
@@ -23,6 +24,7 @@ app.use(studentSubjectRouter);
 app.use(staffSubjectsRouter);
 app.use(examsRouter);
 app.use(housesRouter);
+app.use(wandsRouter);
 
 app.use(errorHandler);
 

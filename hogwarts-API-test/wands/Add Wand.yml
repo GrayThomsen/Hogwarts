@@ -1,0 +1,23 @@
+info:
+  name: Add Wand
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{BaseURL}}/"
+  body:
+    type: json
+    data: |-
+      {
+        "fk_staff_owner": null,
+        "fk_student_owner": 7,
+        "description": "Holly wand with a phoenix feather core"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
