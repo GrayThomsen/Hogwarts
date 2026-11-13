@@ -14,9 +14,10 @@ http:
     type: json
     data: |-
       {
-        "first_name": "Peter",
-        "last_name": "Lind",
-        "role": "Teacher"
+        "first_name": "Emil",
+        "last_name": "Thomsen",
+        "role": "Teacher's Assistant",
+        "house": 2
       }
   auth: inherit
 

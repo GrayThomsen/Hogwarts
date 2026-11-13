@@ -11,7 +11,7 @@ http:
       value: staff
       type: path
     - name: id
-      value: ""
+      value: "2"
       type: path
   auth: inherit
 

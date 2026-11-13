@@ -7,18 +7,18 @@ export async function getAllStudentClasses() {
   return result.rows;
 }
 
-export async function createStudentClass(student_id, class_id, year) {
+export async function createStudentClass(assignment) {
   const result = await pool.query(
     "INSERT INTO student_classes (student_id, class_id, year) VALUES ($1, $2, $3) RETURNING *",
-    [student_id, class_id, year],
+    [assignment.student_id, assignment.class_id, assignment.year],
   );
   return result.rows[0];
 }
 
-export async function deleteStudentClass(student_id, class_id, year) {
+export async function deleteStudentClass(assignment) {
   const result = await pool.query(
     "DELETE FROM student_classes WHERE student_id = $1 AND class_id = $2 AND year = $3 RETURNING *",
-    [student_id, class_id, year],
+    [assignment.student_id, assignment.class_id, assignment.year],
   );
   return result.rows[0];
 }

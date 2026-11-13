@@ -19,18 +19,18 @@ export async function getClassByName(name) {
   return result.rows[0];
 }
 
-export async function createClass(name) {
+export async function createClass(classData) {
   const result = await pool.query(
     "INSERT INTO classes (name) VALUES ($1) RETURNING *",
-    [name],
+    [classData.name],
   );
   return result.rows[0];
 }
 
-export async function updateClass(id, name) {
+export async function updateClass(id, classData) {
   const result = await pool.query(
     "UPDATE classes SET name = $1 WHERE id = $2 RETURNING *",
-    [name, id],
+    [classData.name, id],
   );
   return result.rows[0];
 }

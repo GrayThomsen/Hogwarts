@@ -36,28 +36,28 @@ export const getClassById = async (req, res) => {
 
 // Create a new class
 export const createClass = async (req, res) => {
-  const { name } = req.body;
-  const existing = await classesRepo.getClassByName(name);
+  const classData = req.body;
+  const existing = await classesRepo.getClassByName(classData.name);
 
   if (existing) {
     throw new httpError(409, "Class with the same name already exists");
   }
 
-  const created = await classesRepo.createClass(name);
+  const created = await classesRepo.createClass(classData);
   res.status(201).json(created);
 };
 
 // Update a class by ID
 export const updateClass = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const classData = req.body;
   const existing = await classesRepo.getClassById(id);
 
   if (!existing) {
     throw new httpError(404, "Class not found");
   }
 
-  const updated = await classesRepo.updateClass(id, name);
+  const updated = await classesRepo.updateClass(id, classData);
   res.status(200).json(updated);
 };
 
