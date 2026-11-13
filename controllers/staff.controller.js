@@ -1,6 +1,6 @@
 import * as staffRepository from "../repositories/staff.repository.js";
-import httpError from "../errorhandling/httpError.js";
-import validateBody from "../errorhandling/validateBody.js";
+import httpError from "../errors/httpError.js";
+import validateBody from "../errors/validateBody.js";
 import createStaffSchema from "../dtos/createStaff.dto.js";
 import updateStaffSchema from "../dtos/updateStaff.dto.js";
 

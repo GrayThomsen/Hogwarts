@@ -12,7 +12,7 @@ import staffSubjectsRouter from "./routers/staff_subjects.router.js";
 import wandsRouter from "./routers/wands.router.js";
 import examsRouter from "./routers/exams.router.js";
 
-import errorHandler from "./errorhandling/errorhandler.js";
+import errorHandler from "./errors/errorhandler.js";
 const app = express();
 
 // Middleware for parsing JSON bodies

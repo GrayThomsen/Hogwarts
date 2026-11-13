@@ -1,6 +1,6 @@
 import * as subjectsRepository from "../repositories/classes.repository.js";
-import httpError from "../errorhandling/httpError.js";
-import validateBody from "../errorhandling/validateBody.js";
+import httpError from "../errors/httpError.js";
+import validateBody from "../errors/validateBody.js";
 import createSubjectSchema from "../dtos/createSubject.dto.js";
 import updateSubjectSchema from "../dtos/updateSubject.dto.js";
 

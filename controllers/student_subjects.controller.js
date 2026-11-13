@@ -1,6 +1,6 @@
 import * as studentSubjectsRepo from "../repositories/student_subjects.repository.js";
-import httpError from "../errorhandling/httpError.js";
-import validateBody from "../errorhandling/validateBody.js";
+import httpError from "../errors/httpError.js";
+import validateBody from "../errors/validateBody.js";
 import createStudentSubjectSchema from "../dtos/createStudentSubject.dto.js";
 
 export const getAllStudentSubjects = async (req, res) => {

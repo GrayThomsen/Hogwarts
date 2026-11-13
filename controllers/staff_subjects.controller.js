@@ -1,6 +1,6 @@
 import * as staffSubjectsRepo from "../repositories/staff_subjects.repository.js";
-import httpError from "../errorhandling/httpError.js";
-import validateBody from "../errorhandling/validateBody.js";
+import httpError from "../errors/httpError.js";
+import validateBody from "../errors/validateBody.js";
 import createStaffSubjectSchema from "../dtos/createStaffSubject.dto.js";
 
 export const getAllStaffSubjects = async (req, res) => {

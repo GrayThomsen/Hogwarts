@@ -1,6 +1,6 @@
 import * as examsRepository from "../repositories/exams.repository.js";
-import httpError from "../errorhandling/httpError.js";
-import validateBody from "../errorhandling/validateBody.js";
+import httpError from "../errors/httpError.js";
+import validateBody from "../errors/validateBody.js";
 import createExamSchema from "../dtos/createExam.dto.js";
 import updateExamSchema from "../dtos/updateExam.dto.js";
 

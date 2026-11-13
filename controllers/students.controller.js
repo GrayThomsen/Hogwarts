@@ -1,6 +1,6 @@
 import * as studentsRepo from "../repositories/students.repository.js";
-import httpError from "../errorhandling/httpError.js";
-import validateBody from "../errorhandling/validateBody.js";
+import httpError from "../errors/httpError.js";
+import validateBody from "../errors/validateBody.js";
 import createStudentSchema from "../dtos/createStudent.dto.js";
 import updateStudentSchema from "../dtos/updateStudent.dto.js";
 

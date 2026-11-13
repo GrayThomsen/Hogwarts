@@ -1,6 +1,6 @@
 import * as wandsRepository from "../repositories/wands.repository.js";
-import httpError from "../errorhandling/httpError.js";
-import validateBody from "../errorhandling/validateBody.js";
+import httpError from "../errors/httpError.js";
+import validateBody from "../errors/validateBody.js";
 
 export const getAllWands = async (req, res) => {
   const wands = await wandsRepository.getAllWands();

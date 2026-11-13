@@ -1,5 +1,5 @@
 import * as housesRepository from "../repositories/houses.repository.js";
-import httpError from "../errorhandling/httpError.js";
+import httpError from "../errors/httpError.js";
 
 //* Controller functions for handling Hogwarts houses data
 
