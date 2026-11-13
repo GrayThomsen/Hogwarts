@@ -85,12 +85,13 @@ Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og
   kobling og returnerer den (`200`), eller `404` med
   `{"error":"Staff-subject assignment not found"}` hvis den ikke findes.`
 
- ## Exams
-  - `GET /exams` - Returnerer alle eksamener (`200`). Findes ingen, svares `404` med `{"error":"No exams found"}`.
-  - `GET /exams/:id` - Returnerer eksamen med det id (`200`). Findes den ikke, svares `404` med `{"error":"Exam not found"}`.
-  - `POST /exams` - Opretter en eksamen ud fra `name` og `date`. Findes kombinationen allerede, svares `409` med `{"error":"Exam with the same name and date already exists"}`. Ellers returneres den oprettede række med `201`.
-  - `PUT /exams/:id` - Opdaterer eksamens `name` og `date`. Returnerer den opdaterede række (`200`), eller `404` med `{"error":"Exam not found"}` hvis id ikke findes.
-  - `DELETE /exams/:id` - Sletter eksamen og returnerer rækken (`200`), eller `404` med `{"error":"Exam not found"}` hvis id ikke findes.
+## Exams
+
+- `GET /exams` - Returnerer alle eksamener (`200`). Findes ingen, svares `404` med `{"error":"No exams found"}`.
+- `GET /exams/:id` - Returnerer eksamen med det id (`200`). Findes den ikke, svares `404` med `{"error":"Exam not found"}`.
+- `POST /exams` - Opretter en eksamen ud fra `name` og `date`. Findes kombinationen allerede, svares `409` med `{"error":"Exam with the same name and date already exists"}`. Ellers returneres den oprettede række med `201`.
+- `PUT /exams/:id` - Opdaterer eksamens `name` og `date`. Returnerer den opdaterede række (`200`), eller `404` med `{"error":"Exam not found"}` hvis id ikke findes.
+- `DELETE /exams/:id` - Sletter eksamen og returnerer rækken (`200`), eller `404` med `{"error":"Exam not found"}` hvis id ikke findes.
 
 ## Kør serveren
 
@@ -101,9 +102,9 @@ Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og
    `Database/hogwarts_insert.sql`).
 4. Start serveren: `node server.js` (lytter på `http://localhost:3000`).
 
-## Til Peter
+## Til Peter, yet again
 
-Endpoints testes manuelt med [Bruno](https://www.usebruno.com/)-samlingen i
+Endpoints testes manuelt med [Bruno](https://www.usebruno.com/)-samlingen er samlet i
 `hogwarts-API-test/`.
 
 1. Åbn Bruno og vælg _Open Collection_ -> `hogwarts-API-test`.
@@ -121,3 +122,4 @@ Create- og update-requests valideres med DTO-skemaer. Ugyldige bodies giver `400
 
 Ruter svarer `500` med `{"error":"Database error"}`, hvis en databaseoperation
 fejler. Fejlen logges også af serveren. Selvom du (Peter), ikke ønskede at se fejl 500, så er det min fallback-løsning for uforudsete databaseproblemer.
+I forhold til fejl håndtering, så har jeg haft lidt svært ved at vide hvor hvad skulle placeres og hvorfor vi thrower hvor vi gør. Jeg forstår godt at det handler om _"hvilken retning"_ fejlen kommer fra, men det har været lidt tricky at få det til at hænge fast i mit hovede, præcis hvorfor strukturen er sådan, som den er.
