@@ -1,13 +1,20 @@
 import express from "express";
-import * as examsController from "../controllers/exams.controller.js";
+import {
+  getAllExams,
+  getExamById,
+  deleteExam,
+  createExam,
+  updateExam,
+  getExamsByStudentId,
+} from "../controllers/exams.controller.js";
 
 const router = express.Router();
 
-router.get("/exams/", examsController.getAllExams);
-router.get("/exams/:id", examsController.getExamById);
-router.delete("/exams/:id", examsController.deleteExam);
-router.post("/exams/", examsController.createExam);
-router.put("/exams/:id", examsController.updateExam);
-router.get("/exams/student/:studentId", examsController.getExamsByStudentId);
+router.get("/exams/", getAllExams);
+router.get("/exams/:id", getExamById);
+router.delete("/exams/:id", deleteExam);
+router.post("/exams/", createExam);
+router.put("/exams/:id", updateExam);
+router.get("/exams/student/:studentId", getExamsByStudentId);
 
 export default router;
