@@ -1,5 +1,5 @@
 info:
-  name: Get Student
+  name: Get Students
   type: http
   seq: 1
 

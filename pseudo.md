@@ -4,7 +4,7 @@ Alle endpoints er `async` og pakket i try/catch. Fanger vi en fejl, logges den, 
 
 ## Mønster 1: GET alle (liste)
 
-Gælder: `GET /houses`, `GET /students`, `GET /staff`, `GET /classes`, `GET /student_classes`, `GET /teacher_classes`
+Gælder: `GET /houses`, `GET /students`, `GET /staff`, `GET /classes`, `GET /student_subjects`, `GET /staff_subjects`, `GET /exams`
 
 ```
 Hent alle rækker fra tabellen (students joines med houses, så husnavn medfølger)
@@ -16,7 +16,7 @@ Ellers:
 
 ## Mønster 2: GET én via id
 
-Gælder: `GET /houses/:id`, `GET /students/:id`, `GET /staff/:id`, `GET /classes/:id`
+Gælder: `GET /houses/:id`, `GET /students/:id`, `GET /staff/:id`, `GET /classes/:id`, `GET /student_subjects/:id`, `GET /staff_subjects/:id`, `GET /exams/:id`
 
 ```
 Læs :id fra URL'en
@@ -29,17 +29,23 @@ Ellers:
 
 ## Mønster 3: POST (opret)
 
-Gælder: `POST /students`, `POST /staff`, `POST /classes`
+Gælder: `POST /students`, `POST /staff`, `POST /subjects`, `POST /exams`, `POST /student_subjects`, `POST /staff_subjects`
 
 ```
 Læs felterne fra request body
     students: first_name, last_name, house
     staff:    first_name, last_name, role
-    classes:  name
+    subjects:  name
+    exams:    name, date
+    student_subjects: student_id, subject_id, year
+    staff_subjects: staff_id, subject_id, role
 Slå op om en række med samme værdier allerede findes
 Hvis den findes:
     svar fejl: 400 for students og staff ("... already exists"),
-               409 for classes ("Class with the same name already exists")
+               409 for classes ("Class with the same name already exists"),
+               409 for exams ("Exam with the same name and date already exists"),
+               409 for student_subjects ("Student-subject combination already exists"),
+               409 for staff_subjects ("Staff-subject combination already exists")
 Ellers:
     indsæt rækken og få den nye række tilbage (RETURNING *)
     svar 201 med den oprettede række
@@ -47,38 +53,38 @@ Ellers:
 
 ## Mønster 4: PUT (ret)
 
-Gælder: `PUT /students/:id`, `PUT /staff/:id`, `PUT /classes/:id`
+Gælder: `PUT /students/:id`, `PUT /staff/:id`, `PUT /subjects/:id`, `PUT /exams/:id`
 
 ```
 Læs :id fra URL og de nye værdier fra body
 Opdater rækken med det id, og få den opdaterede række tilbage
 Hvis ingen række blev opdateret (id findes ikke):
-    svar 404 ("Student not found" osv.)
+    svar 404 ("Student not found" osv., "Exam not found")
 Ellers:
     svar 200 med den opdaterede række
 ```
 
 ## Mønster 5: DELETE via id
 
-Gælder: `DELETE /students/:id`, `DELETE /staff/:id`, `DELETE /classes/:id`
+Gælder: `DELETE /students/:id`, `DELETE /staff/:id`, `DELETE /subjects/:id`, `DELETE /exams/:id`
 
 ```
 Læs :id fra URL
 Slet rækken med det id og få den slettede række tilbage
 Hvis ingen række blev slettet:
-    svar 404 ("... not found")
+    svar 404 ("... not found", "Exam not found", "Student-subject assignment not found", "Staff-subject assignment not found")
 Ellers:
     svar 200 med den slettede række
 ```
 
 ## Mønster 6: POST på koblingstabeller
 
-Gælder: `POST /student_classes`, `POST /teacher_classes`
+Gælder: `POST /student_subjects`, `POST /staff_subjects`
 
 ```
 Læs fra body
-    student_classes: student_id, class_id, year
-    teacher_classes: teacher_id, class_id
+    student_subjects: student_id, subject_id, year
+    staff_subjects: staff_id, subject_id, role
 Slå op om kombinationen allerede findes
 Hvis den findes:
     svar 409 ("... combination already exists")
@@ -89,7 +95,7 @@ Ellers:
 
 ## Mønster 7: DELETE på koblingstabeller
 
-Gælder: `DELETE /student_classes/:student_id/:class_id/:year`, `DELETE /teacher_classes/:teacher_id/:class_id`
+Gælder: `DELETE /student_subjects/:student_id/:subject_id/:year`, `DELETE /staff_subjects/:staff_id/:subject_id`
 
 ```
 Læs alle nøgler fra URL'en (hele den sammensatte nøgle)
@@ -99,9 +105,3 @@ Hvis ingen række blev slettet:
 Ellers:
     svar 200 med den slettede række
 ```
-
-## Bemærkninger
-
-- Der findes ingen `/teachers`-endpoints. Lærere er rækker i `staff`; `teacher_classes.teacher_id` peger på et staff-id. `GET /teachers` ville følge mønster 1 og `PUT /teachers/:id` mønster 4.
-- Houses er kun læsbare (kun mønster 1 og 2). Der er altså ingen måde at nye huse kan skabes eller eksisterende redigeres.
-- `student_classes` og `teacher_classes` har ingen GET-via-id og ingen PUT. At opdatere kunne være fint at have, men det er ikke implementeret i dette mønster. Så du må slette og oprette påny hvis du vil ændre en eksisterende kobling.

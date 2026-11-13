@@ -1,7 +1,9 @@
 import { pool } from "../db.js";
 
 export async function getAllStudentSubjects() {
-  const result = await pool.query(/*SQL*/ `SELECT * FROM students_subjects`);
+  const result = await pool.query(
+    /*SQL*/ `SELECT students.first_name, students.last_name, subjects.name, students_subjects.year FROM students_subjects JOIN students ON students_subjects.fk_student_id = students.id JOIN subjects ON students_subjects.fk_subject_id = subjects.id`,
+  );
   return result.rows;
 }
 
