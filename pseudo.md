@@ -105,3 +105,9 @@ Hvis ingen række blev slettet:
 Ellers:
     svar 200 med den slettede række
 ```
+
+## Ærlig tale
+
+At skrive pseudo løbende har været sindsygt svært og jeg er ikke sikker på at jeg har opdateret alle de rigtige steder. Har forsøgt at arbejde uden AI autofinishing, hvilket også betyder at der sikkert er steder hvor noget mangler.
+Hvis du bemærker noget, så giv endelig besked.
+Vh. Emil
