@@ -50,14 +50,18 @@ export const getClassByName = async (req, res) => {
 
 // Create a new class
 export const createClass = async (req, res) => {
-  const classData = validateBody(createSubjectSchema, req.body);
-  const existing = await subjectsRepository.getClassByName(classData.name);
+  const subjectData = validateBody(createSubjectSchema, req.body);
+  const existing = await subjectsRepository.getClassByName(
+    subjectData.name,
+    subjectData.start_year,
+    subjectData.end_year,
+  );
 
   if (existing) {
     throw new httpError(409, "Class with the same name already exists");
   }
 
-  const created = await subjectsRepository.createClass(classData);
+  const created = await subjectsRepository.createClass(subjectData);
   res.status(201).json(created);
 };
 
