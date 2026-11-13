@@ -15,7 +15,6 @@ import examsRouter from "./routers/exams.router.js";
 import errorHandler from "./errors/errorhandler.js";
 const app = express();
 
-// Middleware for parsing JSON bodies
 app.use(express.json());
 app.use(studentsRouter);
 app.use(staffRouter);
@@ -26,9 +25,9 @@ app.use(examsRouter);
 app.use(housesRouter);
 app.use(wandsRouter);
 
+// Error handling middleware called after all routes, if they fail.
 app.use(errorHandler);
 
-// Start the server
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
