@@ -1,14 +1,10 @@
 import express from "express";
-import {
-  getAllHouses,
-  getHouseById,
-  getHouseByName,
-} from "../controllers/houses.controller.js";
+import * as housesController from "../controllers/houses.controller.js";
 
 const router = express.Router();
 
-router.get("/houses", getAllHouses);
-router.get("/houses/:id", getHouseById);
-router.get("/houses/name/:name", getHouseByName);
+router.get("/houses", housesController.getAllHouses);
+router.get("/houses/:id", housesController.getHouseById);
+router.get("/houses/name/:name", housesController.getHouseByName);
 
 export default router;
