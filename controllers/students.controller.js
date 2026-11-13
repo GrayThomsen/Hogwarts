@@ -1,4 +1,4 @@
-import * as studentsRepo from "../repos/students.repo.js";
+import * as studentsRepo from "../repositories/students.repository.js";
 import httpError from "../errorhandling/httpError.js";
 
 //* Controller functions for handling Hogwarts students data

@@ -5,12 +5,14 @@ import {
   createClass,
   updateClass,
   deleteClass,
+  getClassByName,
 } from "../controllers/classes.controller.js";
 
 const router = express.Router();
 
 router.get("/classes", getAllClasses);
 router.get("/classes/:id", getClassById);
+router.get("/classes/name/:name", getClassByName);
 router.post("/classes", createClass);
 router.put("/classes/:id", updateClass);
 router.delete("/classes/:id", deleteClass);

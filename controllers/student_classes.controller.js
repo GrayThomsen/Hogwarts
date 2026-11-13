@@ -1,4 +1,4 @@
-import * as studentClassesRepo from "../repos/student_classes.repo.js";
+import * as studentClassesRepo from "../repositories/student_classes.repository.js";
 import httpError from "../errorhandling/httpError.js";
 
 //* Controller functions for handling student-class assignments

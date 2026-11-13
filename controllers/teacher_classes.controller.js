@@ -1,4 +1,4 @@
-import * as teacherClassesRepo from "../repos/teacher_classes.repo.js";
+import * as teacherClassesRepo from "../repositories/teacher_classes.repository.js";
 import httpError from "../errorhandling/httpError.js";
 
 //* Controller functions for handling teacher-class assignments

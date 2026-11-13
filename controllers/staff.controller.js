@@ -1,4 +1,4 @@
-import * as staffRepo from "../repos/staff.repo.js";
+import * as staffRepo from "../repositories/staff.repository.js";
 import httpError from "../errorhandling/httpError.js";
 import createTeacherSchema from "../dtos/createTeacher.dto.js";
 import updateTeacherSchema from "../dtos/updateTeacher.dto.js";

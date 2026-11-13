@@ -11,7 +11,7 @@ http:
       value: classes
       type: path
     - name: id
-      value: ""
+      value: "42"
       type: path
   auth: inherit
 

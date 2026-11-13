@@ -1,15 +1,12 @@
 info:
-  name: Get single House
+  name: Get single House (by name)
   type: http
-  seq: 1
+  seq: 3
 
 http:
   method: GET
-  url: "{{BaseURL}}/:dataTable/:id"
+  url: "{{BaseURL}}/:dataTable/name/Hufflepuff"
   params:
-    - name: id
-      value: ""
-      type: path
     - name: dataTable
       value: houses
       type: path

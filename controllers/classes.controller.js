@@ -1,9 +1,9 @@
-import * as classesRepo from "../repos/classes.repo.js";
+import * as subjectsRepository from "../repositories/classes.repository.js";
 import httpError from "../errorhandling/httpError.js";
 
 //* Controller functions for handling Hogwarts classes data
 export const getAllClasses = async (req, res) => {
-  const allClasses = await classesRepo.getAllClasses();
+  const allClasses = await subjectsRepository.getAllClasses();
 
   if (allClasses.length === 0) {
     throw new httpError(404, "Classes not found");
@@ -13,7 +13,7 @@ export const getAllClasses = async (req, res) => {
 };
 
 export const getClasses = async (req, res) => {
-  const classes = await classesRepo.getAllClasses();
+  const classes = await subjectsRepository.getAllClasses();
 
   if (classes.length === 0) {
     throw new httpError(404, "Classes not found");
@@ -25,7 +25,7 @@ export const getClasses = async (req, res) => {
 // Get a specific Hogwarts class by ID
 export const getClassById = async (req, res) => {
   const { id } = req.params;
-  const classData = await classesRepo.getClassById(id);
+  const classData = await subjectsRepository.getClassById(id);
 
   if (!classData) {
     throw new httpError(404, "Class not found");
@@ -34,16 +34,27 @@ export const getClassById = async (req, res) => {
   res.status(200).json(classData);
 };
 
+export const getClassByName = async (req, res) => {
+  const { name } = req.params;
+  const classData = await subjectsRepository.getClassByName(name);
+
+  if (!classData) {
+    throw new httpError(404, "No subject of that name");
+  }
+
+  res.status(200).json(classData);
+};
+
 // Create a new class
 export const createClass = async (req, res) => {
   const classData = req.body;
-  const existing = await classesRepo.getClassByName(classData.name);
+  const existing = await subjectsRepository.getClassByName(classData.name);
 
   if (existing) {
     throw new httpError(409, "Class with the same name already exists");
   }
 
-  const created = await classesRepo.createClass(classData);
+  const created = await subjectsRepository.createClass(classData);
   res.status(201).json(created);
 };
 
@@ -51,25 +62,25 @@ export const createClass = async (req, res) => {
 export const updateClass = async (req, res) => {
   const { id } = req.params;
   const classData = req.body;
-  const existing = await classesRepo.getClassById(id);
+  const existing = await subjectsRepository.getClassById(id);
 
   if (!existing) {
     throw new httpError(404, "Class not found");
   }
 
-  const updated = await classesRepo.updateClass(id, classData);
+  const updated = await subjectsRepository.updateClass(id, classData);
   res.status(200).json(updated);
 };
 
 // Delete a class by ID
 export const deleteClass = async (req, res) => {
   const { id } = req.params;
-  const existing = await classesRepo.getClassById(id);
+  const existing = await subjectsRepository.getClassById(id);
 
   if (!existing) {
     throw new httpError(404, "Class not found");
   }
 
-  const deleted = await classesRepo.deleteClass(id);
+  const deleted = await subjectsRepository.deleteClass(id);
   res.status(200).json(deleted);
 };

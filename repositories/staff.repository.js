@@ -38,7 +38,7 @@ export async function createStaff(teacher) {
   );
   const newStaffId = result.rows[0].id;
 
-console.log(teacher.house);
+  console.log(teacher.house);
 
   return getStaffById(newStaffId);
 }
