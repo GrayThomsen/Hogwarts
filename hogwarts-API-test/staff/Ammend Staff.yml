@@ -13,6 +13,19 @@ http:
     - name: id
       value: ""
       type: path
+  body:
+    type: json
+    data: |-
+      {
+        "first_name": "Emil",
+        "last_name": "Thomsen",
+        "fk_house": 9,
+        "active_status": true,
+        "health_status": "Alive",
+        "birthday": "1980-01-01",
+        "date_of_hiring": "2020-09-01",
+        "final_day": null
+      }
   auth: inherit
 
 settings:

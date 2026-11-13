@@ -1,5 +1,8 @@
 import * as subjectsRepository from "../repositories/classes.repository.js";
 import httpError from "../errorhandling/httpError.js";
+import validateBody from "../errorhandling/validateBody.js";
+import createSubjectSchema from "../dtos/createSubject.dto.js";
+import updateSubjectSchema from "../dtos/updateSubject.dto.js";
 
 //* Controller functions for handling Hogwarts classes data
 export const getAllClasses = async (req, res) => {
@@ -47,7 +50,7 @@ export const getClassByName = async (req, res) => {
 
 // Create a new class
 export const createClass = async (req, res) => {
-  const classData = req.body;
+  const classData = validateBody(createSubjectSchema, req.body);
   const existing = await subjectsRepository.getClassByName(classData.name);
 
   if (existing) {
@@ -61,7 +64,7 @@ export const createClass = async (req, res) => {
 // Update a class by ID
 export const updateClass = async (req, res) => {
   const { id } = req.params;
-  const classData = req.body;
+  const classData = validateBody(updateSubjectSchema, req.body);
   const existing = await subjectsRepository.getClassById(id);
 
   if (!existing) {

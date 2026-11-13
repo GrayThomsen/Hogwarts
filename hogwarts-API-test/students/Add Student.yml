@@ -16,7 +16,8 @@ http:
       {
         "first_name": "Peter",
         "last_name": "Lind",
-        "house": 2
+        "fk_house": 9,
+        "birthday": "1980-01-01"
       }
   auth: inherit
 

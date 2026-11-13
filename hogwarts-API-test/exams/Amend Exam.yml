@@ -1,0 +1,30 @@
+info:
+  name: Amend Exam
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: "{{BaseURL}}/exams/:id"
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "fk_student_id": 10,
+        "fk_subject_id": 11,
+        "date": "1996-06-15",
+        "fk_grade_id": 13,
+        "fk_qualifications": 10,
+        "fk_regulators": 10
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

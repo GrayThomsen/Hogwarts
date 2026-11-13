@@ -1,23 +1,20 @@
 info:
-  name: Remove Student-Class combination
+  name: Remove Staff-Subject
   type: http
   seq: 1
 
 http:
   method: DELETE
-  url: "{{BaseURL}}/:dataTable/:student_id/:class_id/:year"
+  url: "{{BaseURL}}/:dataTable/:fk_staff_id/:fk_subject_id"
   params:
-    - name: student_id
+    - name: fk_subject_id
       value: ""
       type: path
-    - name: year
-      value: ""
-      type: path
-    - name: class_id
+    - name: fk_staff_id
       value: ""
       type: path
     - name: dataTable
-      value: student_classes
+      value: staff_subjects
       type: path
   auth: inherit
 

@@ -14,7 +14,11 @@ http:
     type: json
     data: |-
       {
-      "name": "Webdesign"
+        "name": "Webdesign",
+        "start_year": 1,
+        "end_year": 7,
+        "fk_type": null,
+        "fk_required_grade": null
       }
   auth: inherit
 

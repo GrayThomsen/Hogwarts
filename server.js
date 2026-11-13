@@ -6,9 +6,11 @@ import express from "express";
 import housesRouter from "./routers/houses.router.js";
 import studentsRouter from "./routers/students.router.js";
 import staffRouter from "./routers/staff.router.js";
-import classesRouter from "./routers/classes.router.js";
-import studentClassesRouter from "./routers/student_classes.router.js";
-import teacherClassesRouter from "./routers/teacher_classes.router.js";
+import subjectsRouter from "./routers/classes.router.js";
+import studentSubjectRouter from "./routers/student_subjects.router.js";
+import staffSubjectsRouter from "./routers/staff_subjects.router.js";
+import examsRouter from "./routers/exams.router.js";
+
 import errorHandler from "./errorhandling/errorhandler.js";
 const app = express();
 
@@ -16,9 +18,10 @@ const app = express();
 app.use(express.json());
 app.use(studentsRouter);
 app.use(staffRouter);
-app.use(classesRouter);
-app.use(studentClassesRouter);
-app.use(teacherClassesRouter);
+app.use(subjectsRouter);
+app.use(studentSubjectRouter);
+app.use(staffSubjectsRouter);
+app.use(examsRouter);
 app.use(housesRouter);
 
 app.use(errorHandler);

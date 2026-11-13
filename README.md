@@ -19,11 +19,13 @@ Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og
   svares `404` med `{"error":"No students found"}`.
 - `GET /students/:id` - Returnerer eleven med det id inkl. husnavn (`200`).
   Findes eleven ikke, svares `404` med `{"error":"Student not found"}`.
-- `POST /students` - Opretter en elev ud fra `first_name`, `last_name` og
-  `house`. Findes samme fornavn, efternavn og hus allerede, svares `400` med
+- `POST /students` - Opretter en elev med mindst ét af `first_name` og
+  `last_name`; `fk_house` og `birthday` kan være `null` eller udelades.
+  Findes samme fornavn, efternavn og hus allerede, svares `400` med
   `{"error":"Student already exists"}`. Ellers returneres den oprettede række
   med `201`.
-- `PUT /students/:id` - Erstatter elevens `first_name`, `last_name` og `house`.
+- `PUT /students/:id` - Erstatter elevens felter med samme body som POST.
+  Udeladte valgfrie felter sættes til `null`.
   Returnerer den opdaterede række (`200`), eller `404` med
   `{"error":"Student not found"}` hvis id ikke findes.
 - `DELETE /students/:id` - Sletter eleven og returnerer rækken (`200`), eller
@@ -35,13 +37,11 @@ Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og
   med `{"error":"Staff not found"}`.
 - `GET /staff/:id` - Returnerer medarbejderen med det id (`200`). Findes
   vedkommende ikke, svares `404` med `{"error":"Staff member not found"}`.
-- `POST /staff` - Opretter en medarbejder ud fra `first_name`, `last_name` og
-  `role`. Findes samme fornavn, efternavn og rolle allerede, svares `400` med
-  `{"error":"Staff member already exists"}`. Ellers returneres den oprettede
-  række med `201`.
-- `PUT /staff/:id` - Erstatter `first_name`, `last_name` og `role`. Returnerer
-  den opdaterede række (`200`), eller `404` med
-  `{"error":"Staff member not found"}` hvis id ikke findes.
+- `POST /staff` - Opretter en medarbejder. Angiv mindst ét af `first_name` og
+  `last_name`, samt `active_status` og `health_status`. `fk_house`, `birthday`,
+  `date_of_hiring` og `final_day` kan være `null` eller udelades.
+- `PUT /staff/:id` - Erstatter medarbejderens felter med samme body som POST.
+  Udeladte valgfrie felter sættes til `null`. Findes id ikke, svares `404`.
 - `DELETE /staff/:id` - Sletter medarbejderen og returnerer rækken (`200`),
   eller `404` med `{"error":"Staff member not found"}` hvis id ikke findes.
 
@@ -60,30 +60,37 @@ Fejlbeskederne i svarene er på engelsk, som i koden, da det er både moderne og
 - `DELETE /classes/:id` - Sletter klassen og returnerer rækken (`200`), eller
   `404` med `{"error":"Class not found"}` hvis id ikke findes.
 
-## Student-classes assignments
+## Student-subject assignments
 
-- `GET /student_classes` - Returnerer alle elev-klasse-koblinger (`200`).
-  Findes ingen, svares `404` med `{"error":"No student-class assignments found"}`.
-- `POST /student_classes` - Opretter en kobling ud fra `student_id`, `class_id`
+- `GET /student_subjects` - Returnerer alle elev-fag-koblinger (`200`).
+  Findes ingen, svares `404`.
+- `POST /student_subjects` - Opretter en kobling ud fra `fk_student_id`, `fk_subject_id`
   og `year`. Findes kombinationen allerede, svares `409` med
-  `{"error":"Student-class combination already exists"}`. Ellers returneres den
+  `{"error":"Student-subject combination already exists"}`. Ellers returneres den
   oprettede række med `201`.
-- `DELETE /student_classes/:student_id/:class_id/:year` - Sletter den matchende
+- `DELETE /student_subjects/:fk_student_id/:fk_subject_id/:year` - Sletter den matchende
   kobling og returnerer den (`200`), eller `404` med
-  `{"error":"Student-class assignment not found"}` hvis den ikke findes.
+  `{"error":"Student-subject assignment not found"}` hvis den ikke findes.
 
-## Teacher-classes assignments
+## Staff-subject assignments
 
-- `GET /teacher_classes` - Returnerer alle lærer-klasse-koblinger (`200`).
+- `GET /staff_subjects` - Returnerer alle personale-fag-koblinger (`200`).
   Findes ingen, svares `404` med
-  `{"error":"No teacher-class assignments found"}`.
-- `POST /teacher_classes` - Opretter en kobling ud fra `teacher_id` og
-  `class_id`. Findes kombinationen allerede, svares `409` med
-  `{"error":"Teacher-class combination already exists"}`. Ellers returneres den
+  `{"error":"No staff-subject assignments found"}`.
+- `POST /staff_subjects` - Opretter en kobling ud fra `fk_staff_id`,
+  `fk_subject_id` og valgfrit `role`. Findes kombinationen allerede, svares `409` med
+  `{"error":"Staff-subject combination already exists"}`. Ellers returneres den
   oprettede række med `201`.
-- `DELETE /teacher_classes/:teacher_id/:class_id` - Sletter den matchende
+- `DELETE /staff_subjects/:fk_staff_id/:fk_subject_id` - Sletter den matchende
   kobling og returnerer den (`200`), eller `404` med
-  `{"error":"Teacher-class assignment not found"}` hvis den ikke findes.
+  `{"error":"Staff-subject assignment not found"}` hvis den ikke findes.`
+
+ ## Exams
+  - `GET /exams` - Returnerer alle eksamener (`200`). Findes ingen, svares `404` med `{"error":"No exams found"}`.
+  - `GET /exams/:id` - Returnerer eksamen med det id (`200`). Findes den ikke, svares `404` med `{"error":"Exam not found"}`.
+  - `POST /exams` - Opretter en eksamen ud fra `name` og `date`. Findes kombinationen allerede, svares `409` med `{"error":"Exam with the same name and date already exists"}`. Ellers returneres den oprettede række med `201`.
+  - `PUT /exams/:id` - Opdaterer eksamens `name` og `date`. Returnerer den opdaterede række (`200`), eller `404` med `{"error":"Exam not found"}` hvis id ikke findes.
+  - `DELETE /exams/:id` - Sletter eksamen og returnerer rækken (`200`), eller `404` med `{"error":"Exam not found"}` hvis id ikke findes.
 
 ## Kør serveren
 
@@ -109,6 +116,8 @@ Endpoints testes manuelt med [Bruno](https://www.usebruno.com/)-samlingen i
 Pseudokode _Eller suppekode, ;-)"_ for endpoint-mønstrene findes i [pseudo.md](./pseudo.md).
 
 ## Fejl
+
+Create- og update-requests valideres med DTO-skemaer. Ugyldige bodies giver `400`.
 
 Ruter svarer `500` med `{"error":"Database error"}`, hvis en databaseoperation
 fejler. Fejlen logges også af serveren. Selvom du (Peter), ikke ønskede at se fejl 500, så er det min fallback-løsning for uforudsete databaseproblemer.

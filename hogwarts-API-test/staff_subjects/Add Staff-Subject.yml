@@ -1,5 +1,5 @@
 info:
-  name: Add Student-Class combination
+  name: Add Staff-Subject
   type: http
   seq: 1
 
@@ -8,14 +8,15 @@ http:
   url: "{{BaseURL}}/:dataTable"
   params:
     - name: dataTable
-      value: student_classes
+      value: staff_subjects
       type: path
   body:
     type: json
     data: |-
       {
-        "teacher_id": 1,
-        "class_id": 3
+        "fk_staff_id": 5,
+        "fk_subject_id": 11,
+        "role": "Teacher"
       }
   auth: inherit
 

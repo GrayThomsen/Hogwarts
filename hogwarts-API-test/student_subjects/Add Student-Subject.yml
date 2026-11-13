@@ -1,0 +1,27 @@
+info:
+  name: Add Student-Subject
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BaseURL}}/:dataTable"
+  params:
+    - name: dataTable
+      value: student_subjects
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "fk_student_id": 10,
+        "fk_subject_id": 11,
+        "year": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

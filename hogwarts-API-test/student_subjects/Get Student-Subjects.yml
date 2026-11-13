@@ -1,22 +1,15 @@
 info:
-  name: Add Teacher-Class combination
+  name: Get Student-Subjects
   type: http
   seq: 1
 
 http:
-  method: POST
+  method: GET
   url: "{{BaseURL}}/:dataTable"
   params:
     - name: dataTable
-      value: teacher_classes
+      value: student_subjects
       type: path
-  body:
-    type: json
-    data: |-
-      {
-        "teacher_id": 1,
-        "class_id": 3
-      }
   auth: inherit
 
 settings:

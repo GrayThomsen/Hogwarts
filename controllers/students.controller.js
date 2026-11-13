@@ -1,5 +1,8 @@
 import * as studentsRepo from "../repositories/students.repository.js";
 import httpError from "../errorhandling/httpError.js";
+import validateBody from "../errorhandling/validateBody.js";
+import createStudentSchema from "../dtos/createStudent.dto.js";
+import updateStudentSchema from "../dtos/updateStudent.dto.js";
 
 //* Controller functions for handling Hogwarts students data
 
@@ -23,7 +26,7 @@ export const getStudentById = async (req, res) => {
 };
 
 export const createStudent = async (req, res) => {
-  const student = req.body;
+  const student = validateBody(createStudentSchema, req.body);
   //? Not against the rules, but prevents accidental re-creation of the same student.
   const existing = await studentsRepo.findStudent(student);
 
@@ -37,7 +40,7 @@ export const createStudent = async (req, res) => {
 
 export const updateStudent = async (req, res) => {
   const { id } = req.params;
-  const student = req.body;
+  const student = validateBody(updateStudentSchema, req.body);
   const existing = await studentsRepo.getStudentById(id);
 
   if (!existing) {

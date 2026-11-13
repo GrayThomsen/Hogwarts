@@ -17,9 +17,10 @@ http:
     type: json
     data: |-
       {
-        "first_name":"",
-        "last_name":"",
-        "house":""
+        "first_name": "Peter",
+        "last_name": "Lind",
+        "fk_house": 9,
+        "birthday": "1980-01-01"
       }
   auth: inherit
 
